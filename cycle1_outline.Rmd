@@ -1,0 +1,78 @@
+---
+title: "Cycle 1"
+author: "Damian Wollny"
+output:
+  html_document:
+    theme: paper
+    df_print: kable
+    code_folding: hide
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = FALSE, message = FALSE)
+options(width = 12)
+```
+
+```{r}
+library(tidyverse)
+theme_set(theme_classic(base_size=22))
+```
+
+## Course content
+
+### Introduce the RStudio environment
+
+Here, the idea is to learn what all the windows and buttons mean
+
+<u>Things to learn:</u>
+ 
+ - Gobal environment, console, terminal, "code window"
+ - save a simple script file?
+ - markdown language: "new file" -> "markdown" -> "Knit to HTML" -> look at what code ouput looks like
+ 
+### Get the data
+
+First we will try to get the data from the source and try to load it into R
+
+<u>Things to learn:</u>
+
+ - clicking for millenials -> explain what functions, libraries etc. are
+ - what does 'read.csv()' mean? -> what is a function?
+ - introduce ?help
+ - use tab for autocompletion
+ - assign variable for the new table (= vs <-)
+ - when do you use quotations when assigning variables -> Difference between x <- 2 and x <- "2" -> explain variable types (character, numeric, factor etc)
+ - parantheses and quotations must be closed -> common error
+ - look at the data with View(), head(), tail(), str() functions
+ - comment code with "#"
+ - concept of working directory / paths for files / changing directory
+
+### Simple manipulation of table
+
+<u>Things to learn:</u>
+
+ - we need tidyverse -> what is a library? how to install? how to load?
+ - concept of pipe
+ - clean up table: dplyr basics - introduce filter(), select(), rename() - introduce logical operators
+ - read.csv() function (?)
+
+### Simple plots
+
+<u>Things to learn:</u>
+
+ - grammar of graphics (ggplot)
+ - explain principle of adding layers
+ - start with geom_point (easiest)
+ - explain aesthetic mappings -> adding more dimensions to 2-dimensional plot
+ - play with color, size, shape, alpha... -> maybe a good point to introduce stack overflow? let them google how to change the point color in a ggplot
+ - explain facets (??)
+
+## Homework
+
+### Homework types / Goal of homework
+
+ - "Übung macht den Meister" -> let them repeat the things the things they learned with slight tweeks
+ - Why does this code not work? -> Fix broken code

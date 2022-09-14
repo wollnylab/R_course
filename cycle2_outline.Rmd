@@ -1,0 +1,62 @@
+---
+title: "Cycle 2"
+author: "Damian Wollny"
+output:
+  html_document:
+    theme: paper
+    df_print: kable
+    code_folding: hide
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = FALSE, message = FALSE)
+options(width = 12)
+```
+
+```{r}
+library(tidyverse)
+theme_set(theme_classic(base_size=22))
+```
+
+## Course content
+ 
+### Get the data
+
+This time we will get data that is a bit more of a pain to work with and needs some cleaning up before we get started
+
+<u>Things to learn:</u>
+
+ - 'read.csv()' -> 'sep' argument, 'skip' argument
+ - string manipulation with stringr -> e.g. get rid of the first/last character, split strings by character...
+ 
+
+### Manipulation of table
+
+Here the goal would be to learn more ways of data manipulation
+
+<u>Things to learn:</u>
+
+ - for loop and if statements -> not sure how to implement but definately something they need to know
+ - combine tables -> bind_cols(), bind_rows(), left_join() etc
+ - summarize data -> group_by() and summarize()
+
+### Plots
+
+Now the plots should get more suffisticated and really demonstrate how powerful ggplot2() is
+
+<u>Things to learn:</u>
+
+ - different geoms (this can be quite extensive)
+ - facets (if they haven't already)
+ - logscale the axes
+ - tweaking the plots -> labelling datapoints, choosing color paletts...
+
+## Homework
+
+### Homework types / Goal of homework
+
+One idea for the 2nd cycle would be that we demonstrate the principles using e.g. iris and let them do the real thing with the interesting data at home
+
