@@ -11,7 +11,6 @@
 
 <meta name="author" content="Damian Wollny" />
 
-<meta name="date" content="2022-09-13" />
 
 <title>Cycle 1</title>
 
@@ -254,6 +253,8 @@ window.initializeCodeFolding = function(show) {
   // select all R code blocks
   var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
   rCodeBlocks.each(function() {
+    // skip if the block has fold-none class
+    if ($(this).hasClass('fold-none')) return;
 
     // create a collapsable div to wrap the code in
     var div = $('<div class="collapse r-code-collapse"></div>');
@@ -475,7 +476,7 @@ pre code {
 
 <h1 class="title toc-ignore">Cycle 1</h1>
 <h4 class="author">Damian Wollny</h4>
-<h4 class="date">September 13, 2022</h4>
+<h4 class="date">Oktober 06, 2022</h4>
 
 </div>
 
@@ -501,6 +502,7 @@ into R</p>
 <ul>
 <li>clicking for millenials -&gt; explain what functions, libraries etc.
 are</li>
+<li>installing and loading libraries</li>
 <li>what does ‘read.csv()’ mean? -&gt; what is a function?</li>
 <li>introduce ?help</li>
 <li>use tab for autocompletion</li>
@@ -511,8 +513,12 @@ between x &lt;- 2 and x &lt;- “2” -&gt; explain variable types
 <li>parantheses and quotations must be closed -&gt; common error</li>
 <li>look at the data with View(), head(), tail(), str() functions</li>
 <li>comment code with “#”</li>
-<li>concept of working directory / paths for files / changing
-directory</li>
+<li>concept of working directory / paths for files / changing directory
+<ul>
+<li>getwd(), setwd()</li>
+<li>working directory may be different in markdown and regular R</li>
+</ul></li>
+<li>the concept of “$”</li>
 </ul>
 </div>
 <div id="simple-manipulation-of-table" class="section level3">
@@ -525,6 +531,12 @@ load?</li>
 <li>clean up table: dplyr basics - introduce filter(), select(),
 rename() - introduce logical operators</li>
 <li>read.csv() function (?)</li>
+<li>dim(), nrow(), ncol()</li>
+<li>long to wide and vice versa via tidyr::pivot_wider() &amp;
+tidyr::pivot_ longer()</li>
+<li>colnames() &amp; rownames()</li>
+<li>concept of c() and vector</li>
+<li></li>
 </ul>
 </div>
 <div id="simple-plots" class="section level3">
@@ -542,6 +554,17 @@ in a ggplot</li>
 <li>explain facets (??)</li>
 </ul>
 </div>
+<div id="pulling-stats-from-data" class="section level3">
+<h3>Pulling stats from data</h3>
+<p><u>Things to learn:</u></p>
+<ul>
+<li>summary()/mean()/median() &amp; dplyr::group_by +
+dplyr::summarize()</li>
+<li>dplyr::top_n() and/or alternatively dplyr::slice()</li>
+<li>table() and/or alternatively dplyr::count()</li>
+<li></li>
+</ul>
+</div>
 </div>
 <div id="homework" class="section level2">
 <h2>Homework</h2>
@@ -551,6 +574,27 @@ in a ggplot</li>
 <li>“Übung macht den Meister” -&gt; let them repeat the things the
 things they learned with slight tweeks</li>
 <li>Why does this code not work? -&gt; Fix broken code</li>
+</ul>
+</div>
+</div>
+<div id="useful-links" class="section level2">
+<h2>Useful links</h2>
+<div id="for-a-presentation" class="section level3">
+<h3>for a presentation</h3>
+<ul>
+<li><a href="https://towardsdatascience.com/top-100-most-used-r-functions-on-github-9caf2b81b314" class="uri">https://towardsdatascience.com/top-100-most-used-r-functions-on-github-9caf2b81b314</a>
+- second figure showing the 100 most used packages in R on github;
+emphasize the importance of ggplot2 &amp; dplyr + other tidyverse
+packages; show the multitude of R packages</li>
+</ul>
+</div>
+<div id="for-students" class="section level3">
+<h3>for students</h3>
+<ul>
+<li><a href="https://www.rstudio.com/resources/cheatsheets/" class="uri">https://www.rstudio.com/resources/cheatsheets/</a> - cool
+cheatsheets</li>
+<li><a href="https://bookdown.org/yih_huynh/Guide-to-R-Book/trouble.html" class="uri">https://bookdown.org/yih_huynh/Guide-to-R-Book/trouble.html</a>
+- good guide on troubleshooting common R errors</li>
 </ul>
 </div>
 </div>

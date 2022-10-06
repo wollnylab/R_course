@@ -97,11 +97,11 @@ First we will try to get the data from the source and try to load it into R
 
 
 ## Useful links 
-###for a presentation
+### for a presentation
 
   * https://towardsdatascience.com/top-100-most-used-r-functions-on-github-9caf2b81b314 - second figure showing the 100 most used packages in R on github; emphasize the importance of ggplot2 & dplyr + other tidyverse packages; show the multitude of R packages
   
-###for students
+### for students
 
   * https://www.rstudio.com/resources/cheatsheets/ - cool cheatsheets 
   * https://bookdown.org/yih_huynh/Guide-to-R-Book/trouble.html - good guide on troubleshooting common R errors
