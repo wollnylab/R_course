@@ -31,7 +31,7 @@ Here, the idea is to learn what all the windows and buttons mean
  
  - Gobal environment, console, terminal, "code window"
  - save a simple script file?
- - markdown language: "new file" -> "markdown" -> "Knit to HTML" -> look at what code ouput looks like
+ - markdown language: "new file" -> "markdown" -> "Knit to HTML" -> look at what code ouput looks like 
  
 ### Get the data
 
@@ -40,6 +40,7 @@ First we will try to get the data from the source and try to load it into R
 <u>Things to learn:</u>
 
  - clicking for millenials -> explain what functions, libraries etc. are
+  - installing and loading libraries 
  - what does 'read.csv()' mean? -> what is a function?
  - introduce ?help
  - use tab for autocompletion
@@ -48,7 +49,10 @@ First we will try to get the data from the source and try to load it into R
  - parantheses and quotations must be closed -> common error
  - look at the data with View(), head(), tail(), str() functions
  - comment code with "#"
- - concept of working directory / paths for files / changing directory
+ - concept of working directory / paths for files / changing directory 
+    - getwd(), setwd()
+    - working directory may be different in markdown and regular R
+ - the concept of "$"
 
 ### Simple manipulation of table
 
@@ -58,6 +62,11 @@ First we will try to get the data from the source and try to load it into R
  - concept of pipe
  - clean up table: dplyr basics - introduce filter(), select(), rename() - introduce logical operators
  - read.csv() function (?)
+ - dim(), nrow(), ncol()
+ - long to wide and vice versa via tidyr::pivot_wider() & tidyr::pivot_ longer()
+ - colnames() & rownames()
+ - concept of c() and vector
+ - 
 
 ### Simple plots
 
@@ -69,6 +78,15 @@ First we will try to get the data from the source and try to load it into R
  - explain aesthetic mappings -> adding more dimensions to 2-dimensional plot
  - play with color, size, shape, alpha... -> maybe a good point to introduce stack overflow? let them google how to change the point color in a ggplot
  - explain facets (??)
+ 
+### Pulling stats from data
+
+<u>Things to learn:</u>
+
+* summary()/mean()/median() & dplyr::group_by + dplyr::summarize()
+* dplyr::top_n() and/or alternatively dplyr::slice()
+* table() and/or alternatively dplyr::count()
+* 
 
 ## Homework
 
@@ -76,3 +94,15 @@ First we will try to get the data from the source and try to load it into R
 
  - "Übung macht den Meister" -> let them repeat the things the things they learned with slight tweeks
  - Why does this code not work? -> Fix broken code
+
+
+## Useful links 
+###for a presentation
+
+  * https://towardsdatascience.com/top-100-most-used-r-functions-on-github-9caf2b81b314 - second figure showing the 100 most used packages in R on github; emphasize the importance of ggplot2 & dplyr + other tidyverse packages; show the multitude of R packages
+  
+###for students
+
+  * https://www.rstudio.com/resources/cheatsheets/ - cool cheatsheets 
+  * https://bookdown.org/yih_huynh/Guide-to-R-Book/trouble.html - good guide on troubleshooting common R errors
+  
