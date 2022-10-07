@@ -52,7 +52,7 @@ First we will try to get the data from the source and try to load it into R
  - concept of working directory / paths for files / changing directory 
     - getwd(), setwd()
     - working directory may be different in markdown and regular R
- - the concept of "$"
+ - the concept of "$" & "%in%"
 
 ### Simple manipulation of table
 
@@ -84,7 +84,7 @@ First we will try to get the data from the source and try to load it into R
 <u>Things to learn:</u>
 
 * summary()/mean()/median() & dplyr::group_by + dplyr::summarize()
-* dplyr::top_n() and/or alternatively dplyr::slice()
+* dplyr::top_n() 
 * table() and/or alternatively dplyr::count()
 * 
 
