@@ -1,0 +1,160 @@
+---
+title: "Introduction to heatmaps"
+author: "Julia Micheel"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### What are heatmaps?
+
+- ideal for showing 3 variables in one plot. E.g. Calls per hour of day: Call time 
+- heatmaps many times contain dendrograms. Dendograms are formed by hierachical chlistering. Shows relationships between objects by branches. In heatmaps, dendrograms shows how similar samples are. The color indicates which attributes of the data are responnsible for the clustering of the dendrogram.
+
+### First dataset: German weather data from the DWD
+
+- library(tidyverse) is a collection of useful packages, many of which we have used before such as `dplyr` or `ggplot2`. Once you load the tidyverse package, you do not need to load the other packages seperately. 
+
+- if the tidyverse installation failed, we can also install/load the single libraries dplyr, ggplot2, tibble, pheatmap
+
+- the months of the data are indexed by numbers. E.g. 1 means January, 2 means Feb etc
+
+- for creating the heatmap, we need to convert the data into the **wide format** (columns are months, rows are the years) using pivot_wider()
+
+- the column_to_rownames() function from the tibble library converts a specified column into the rownames
+
+- colnames() function can be used to rename the column names
+
+```{r}
+## load tidyverse packages
+library(tibble)
+library(ggplot2)
+library(dplyr)
+library(pheatmap)
+library(tidyr)
+
+## load data
+meantemp_germany <- read.csv(file = "~/PI/Lectures/R_course/3rd_cycle/02_heatmaps/meantemp_germany.csv", sep = ",")
+
+## modify data (wide format, all data needs to be numeric)
+
+meantemp_germany_clean <- meantemp_germany %>% 
+  select(year, month, mean_temp_ger) %>% 
+  filter(year >= 1972) %>% 
+  pivot_wider(names_from = month, values_from = mean_temp_ger)
+
+meantemp_germany_clean <- column_to_rownames(meantemp_germany_clean, 'year')
+
+colnames(meantemp_germany_clean) <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+```
+
+### Heatmap generation
+
+- now that the data is in the right shape, a heatmap can be easily 
+
+```{r}
+#default pheatmap function
+pheatmap(meantemp_germany_clean)
+```
+
+- if you do not want the columns to be clustered, you can turn the dendrogram off for the rows and columns
+
+```{r}
+#turn off default clustering
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE)
+
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = "white")
+```
+
+- you can also have gaps between the columns and/or rows
+
+```{r}
+#add gaps between columns and rows
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49))
+```
+
+- if you want to annotate columns you can generage a new dataframe and use the annotation_col argument
+
+```{r}
+##add annotation
+#create annotation data frame
+
+season_df <- data.frame("season" = c("Winter", "Winter", "Spring", "Spring", "Spring", "Summer", "Summer", "Summer", "Autumn", "Autumn", "Autumn", "Winter"))
+
+#change row names 
+row.names(season_df) <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+
+
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df)
+```
+
+- in order to change angle of the x-axis label, use the `angle_col` argument
+
+```{r}
+# change label angle of columns
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45)
+```
+
+- if you want the values of the data to be shown in the heatmap, use the argument `display_numbers`
+
+```{r}
+# change label angle of columns
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T)
+```
+
+- in order to save the heatmap (or any plot) - use the ggsave() function from the ggplot2 library. For that, we need to assign the heatmap to a variable so that R knows *what*  you want to save
+
+```{r}
+# assign heatmap to a variable
+plot <- pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T)
+
+# save the plot as e.g. png
+ggsave(
+  "~/Desktop/heatmap.png",
+  plot = plot,
+  width = 15,
+  height = 20,
+  units = c("cm"),
+)
+```
+
+### More information
+
+- the following tricks were not covered in the 
+
+```{r}
+
+## change annotation colors
+#create color list
+season_color = list(season = c("Winter" = "blue", "Spring" = "green", "Summer" = "red", "Autumn" = "yellow")) 
+
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, annotation_colors = season_color) 
+
+#skip row names
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T, labels_row = c("1972", "", "1974", "", "1976", "", "1978", "", "1980", "", "1982", "", "1984", "", "1986", "", "1988", "", "1990", "", "1992", "", "1994", "", "1996", "", "1998", "", "2000", "", "2002", "", "2004", "", "2006", "", "2008", "", "2010", "", "2012", "", "2014", "", "2016", "", "2018", "", "2020", "", "2022"))
+```
+
+### Sequencing data
+
+- Different patients are seperated in different columns\
+- HCC = hepatocellular carcinoma (liver cancer), CRC = colorectal carcinoma\
+- data needs to be cleaned up (as described above) in order to use the object as the input for: get rid of unneccessary columns and rename the rownames
+
+```{r}
+# load data
+seq_data_clean <- read.csv(file = "~/PI/Lectures/R_course/3rd_cycle/02_heatmaps/seq_data_clean.csv", sep = ",")
+
+# get rid of unneccessary X column
+seq_data_clean$X <- NULL
+
+# use gene names as rownames
+seq_data_clean <- column_to_rownames(seq_data_clean, "gene_name")
+
+# generate heatmap
+pheatmap(seq_data_clean, scale = "row")
+```
+

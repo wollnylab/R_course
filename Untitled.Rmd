@@ -1,8 +1,8 @@
 ---
 title: "Untitled"
 author: "Damian Wollny"
-date: '2022-09-01'
-output: html_document
+date: '2022-10-17'
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -23,7 +23,7 @@ summary(cars)
 
 You can also embed plots, for example:
 
-```{r pressure, echo=T}
+```{r pressure, echo=FALSE}
 plot(pressure)
 ```
 

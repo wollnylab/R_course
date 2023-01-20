@@ -1,0 +1,33 @@
+---
+title: "R lecture script"
+author: "Damian Wollny"
+output:
+  html_document:
+    theme: paper
+    df_print: kable
+    code_folding: hide
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+theme_set(theme_classic(base_size=18))
+```
+
+## Basics
+
+### The console
+
+Type any letter into console and execute
+
+```{r}
+r
+```
+
+

@@ -1,0 +1,133 @@
+---
+title: "R course - WS22/23"
+author: "Damian Wollny"
+output:
+  html_document:
+    theme: paper
+    df_print: kable
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+theme_set(theme_classic(base_size=18))
+```
+
+# Global data on fertilizer use by crop and by country
+
+**Paper**: <https://www.nature.com/articles/s41597-022-01592-z>
+
+**Data**: <https://doi.org/10.5061/dryad.2rbnzs7qh>
+
+<u>About the paper</u>:
+
+FUBS = fertilizer use by crop
+
+"based on an expert <u>survey</u>"
+
+"Crop nutrient balances highlight regions of the world where crop production could be limited by nutrients and/or where there are an excessive quantity being applied"
+
+"We caution, however, that for many countries the estimates provided here are associated with substantial uncertainties"
+
+
+
+## Data exploration
+
+```{r}
+# load data
+fert_data <- read.csv(file = "~/PI/Lectures/R_course/2nd_cycle/doi_10.5061_dryad.2rbnzs7qh__v6/FUBC_1_to_9_data.csv") %>% as_tibble()
+```
+
+### How many different crops are growing in each country
+
+Let's first only look at 2002 (because this year has most data)
+
+```{r}
+# top 10 crop diversity producer
+fert_data %>% 
+  filter(Year_FUBC_publication == 2002) %>% 
+  select(Country, Crop) %>% 
+  distinct() %>% 
+  count(Country) %>% 
+  rename(n_crops = n) %>% 
+  arrange(desc(n_crops)) %>% 
+  head(10) %>% 
+  ggplot(aes(x = reorder(Country, n_crops), y = n_crops)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Top10 Crop producer (2002)", x = "", y = "Number of different Crops")
+
+# flop 10 crop diversity producer
+fert_data %>% 
+  filter(Year_FUBC_publication == 2002) %>% 
+  select(Country, Crop) %>% 
+  distinct() %>% 
+  count(Country) %>% 
+  rename(n_crops = n) %>% 
+  arrange((n_crops)) %>% 
+  head(10) %>% 
+  ggplot(aes(x = reorder(Country, -n_crops), y = n_crops)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Buttom10 Crop producer (2002)", x = "", y = "Number of different Crops")
+
+```
+
+### Which crop takes most land?
+
+Problem: Many countries used a lot of land for crops of the category: *other*. This could very much obscure the data
+
+```{r, fig.width=10}
+fert_data %>% 
+  filter(Year_FUBC_publication == 2002) %>% 
+  select(Crop, Crop_area_k_ha) %>% 
+  distinct() %>% 
+  group_by(Crop) %>% 
+  summarise(land_space = median(Crop_area_k_ha)) %>% 
+  arrange(desc(land_space)) %>% head(5)
+```
+
+### Which country uses most fertilizer
+
+**Teaching challange:** `pivot_longer` in order to get stacked barplots
+
+```{r}
+fert_data %>% 
+  select(Country, Crop, N_k_t, P2O5_k_t, K2O_k_t) %>% 
+  drop_na() %>% 
+  group_by(Country) %>% 
+  summarise(N = sum(N_k_t),
+            P = sum(P2O5_k_t),
+            K = sum(K2O_k_t)) %>% 
+  mutate(total_fert = N+K+P) %>% 
+  arrange(desc(total_fert)) %>% 
+  head(10) %>% 
+  pivot_longer(cols = c(N,P,K), values_to = "kilotonnes", names_to = "fertilizer_type") %>% 
+  ggplot() + 
+  geom_bar(mapping = aes(x = reorder(Country, kilotonnes), y = kilotonnes, fill = fertilizer_type), stat = "identity") +
+  coord_flip() +
+  labs(title = "Fertilizer use by country", x = "", y = "Kilotonnes of fertilizer")
+```
+
+### Explore China's fertilizer use over time
+
+```{r}
+fert_data %>% 
+  filter(Country == "China") %>% 
+  group_by(Year) %>% 
+  summarise(n = sum(N_k_t),
+            p = sum(P2O5_k_t),
+            k  = sum(K2O_k_t)) %>% 
+  pivot_longer(cols = c(n,p,k), names_to = "fertilizer_type", values_to = "kilotons") %>% 
+  ggplot(aes(x = Year, y = kilotons, color = fertilizer_type)) +
+  geom_point() +
+  geom_line(aes(group = fertilizer_type)) +
+  labs(title = "China's fertilizer use over time", y = "Kilotonnes of fertilizer")
+```
+

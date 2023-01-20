@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="UTF-8"?><?mso-application progid="Excel.Sheet"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:date="http://exslt.org/dates-and-times" xmlns:v="urn:schemas-microsoft-com:vml">
+<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+<Author>Friedolin - Studienverwaltung der FSU im Internet</Author>
+<LastAuthor>friedolin@uni-jena.de</LastAuthor>
+<Created>2022-10-19T18:02:03+02:00</Created>
+<Company>Friedrich-Schiller-Universität Jena * Fürstengraben 1 * 07743 Jena</Company>
+<Version>2.1</Version>
+</DocumentProperties>
+<ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+<ProtectStructure>False</ProtectStructure>
+<ProtectWindows>False</ProtectWindows>
+</ExcelWorkbook>
+<Styles>
+<Style ss:Name="Normal" ss:ID="Default">
+<Alignment ss:Vertical="Bottom"/>
+<Borders/>
+<Font/>
+<Interior/>
+<NumberFormat/>
+<Protection/>
+</Style>
+<Style ss:ID="s21">
+<NumberFormat ss:Format="Short Date"/>
+</Style>
+<Style ss:ID="s34">
+<Borders>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+<NumberFormat ss:Format="000"/>
+</Style>
+<Style ss:ID="s36">
+<Borders>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s38">
+<Borders>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s39">
+<Borders>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s40">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Top"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s41">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Right"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Top"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s42">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+</Borders>
+</Style>
+<Style ss:ID="s43">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s44">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+</Style>
+<Style ss:ID="s45">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+</Borders>
+<NumberFormat ss:Format="Short Date"/>
+</Style>
+<Style ss:ID="s46">
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="2" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior ss:Pattern="Solid" ss:Color="#FFFF00"/>
+<NumberFormat ss:Format="000"/>
+</Style>
+<Style ss:ID="s47">
+<Font ss:Bold="1" x:Family="Swiss"/>
+</Style>
+<Style ss:ID="Titel-uniblau">
+<Alignment ss:WrapText="0" ss:Vertical="Top" ss:Horizontal="Center"/>
+<Font ss:Bold="1" ss:Color="#FFFFFF" ss:Size="14" x:Family="Swiss" ss:FontName="Arial"/>
+<Interior ss:Pattern="Solid" ss:Color="#3E6ABE"/>
+</Style>
+<Style ss:ID="tabelle-head">
+<Alignment ss:WrapText="1" ss:Vertical="Top" ss:Horizontal="Left"/>
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Bottom"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Top"/>
+</Borders>
+<Interior/>
+</Style>
+<Style ss:ID="tabelle-foot">
+<Alignment ss:WrapText="1" ss:Vertical="Top" ss:Horizontal="Left"/>
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Top"/>
+</Borders>
+<Interior/>
+</Style>
+<Style ss:ID="tabelle-body-center">
+<Alignment ss:WrapText="1" ss:Vertical="Top" ss:Horizontal="Center"/>
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior/>
+</Style>
+<Style ss:ID="tabelle-body-right">
+<Alignment ss:WrapText="1" ss:Vertical="Top" ss:Horizontal="Right"/>
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior/>
+</Style>
+<Style ss:ID="tabelle-body">
+<Alignment ss:WrapText="1" ss:Vertical="Top" ss:Horizontal="Left"/>
+<Borders>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Left"/>
+<Border ss:Weight="1" ss:LineStyle="Continuous" ss:Position="Right"/>
+</Borders>
+<Interior/>
+</Style>
+<Style ss:ID="standardzelle">
+<Alignment ss:WrapText="1" ss:Vertical="Top"/>
+<Interior/>
+</Style>
+</Styles>
+<Worksheet ss:Name="Veranstaltungsteilnehmer">
+<Table ss:DefaultColumnWidth="100" x:FullRows="1" x:FullColumns="1">
+<Column ss:Width="80.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="80.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="80.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="40.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="80.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="125.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="150.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="50.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="50.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="125.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="150.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="50.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="50.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Column ss:Width="200.00" ss:AutoFitWidth="0" ss:StyleID="standardzelle"/>
+<Row ss:Height="18">
+<Cell ss:MergeAcross="13" ss:StyleID="Titel-uniblau">
+<Data ss:Type="String">Friedolin - Veranstaltungsbelegung im Semester: WiSe 2022/23</Data>
+</Cell>
+</Row>
+<Row/>
+<Row/>
+<Row>
+<Cell ss:MergeAcross="6" ss:StyleID="s47">
+<Data ss:Type="String">Veranstaltung: Datenanalyse mit R (ASQ)</Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:MergeAcross="6" ss:StyleID="s47">
+<Data ss:Type="String">Veranstaltungsnummer: 206780</Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:MergeAcross="6" ss:StyleID="s47">
+<Data ss:Type="String">Gruppe: 1-Gruppe</Data>
+</Cell>
+</Row>
+<Row/>
+<Row>
+<Cell ss:MergeAcross="6" ss:StyleID="s47">
+<Data ss:Type="String">Dozent(en): 
+							</Data>
+</Cell>
+<Cell ss:StyleID="s47"/>
+</Row>
+<Row/>
+<Row/>
+<Row>
+<Cell ss:StyleID="s47">
+<Data ss:Type="String">Das Veröffentlichen dieser Liste ist aus datenschutzrechtlichen Gründen nicht zulässig.</Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="s47">
+<Data ss:Type="String">
+Die Liste darf lediglich im Rahmen des internen Gebrauchs genutzt werden (z.B. handschriftliche Bemerkungen; Dokumentation) und ist nur von zugangsberechtigten Lehrenden zu verwenden.
+								</Data>
+</Cell>
+</Row>
+<Row/>
+<Row ss:Height="13.5"/>
+<Row ss:Height="33.75" ss:AutoFitHeight="0">
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Matrikelnummer</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Nachname</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Vorname</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Status</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Belegweg</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Abschluß
+							&#10;1. Studiengang/-fach</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">1. Studiengang/-fach</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Hochschul-
+							&#10;semester</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Fach-
+							&#10;semester
+							</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Abschluß
+							&#10;2. Studiengang/-fach</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">2. Studiengang/-fach</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Hochschul-
+							&#10;semester</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">Fach-
+							&#10;semester
+							</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-head">
+<Data ss:Type="String">E-Mail</Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">Gasthörer</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Schütze</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Dieter</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">dieter.schuetze@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">Gasthörer</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Sommer</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Thomas Udo</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">thomas.sommer@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">Gasthörer</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Paulmann</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Maria Kerstin</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">maria.paulmann@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">153113</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Nitschmann</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Lukas</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Bachelor B.Sc.</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Geowissenschaften</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">17</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">8</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">lukas.nitschmann@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">177782</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Brinkmann</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Leopold</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Bioinformatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">9</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">leopold.brinkmann@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">178439</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Emmert</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Jonas</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Bioinformatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">9</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">jonas.emmert@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">179064</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Rudolph</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Sascha</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Geowissenschaften</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">9</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">sascha.rudolph@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">180257</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Kolbe</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Larissa</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">FMI-SQ0101</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Informatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">9</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">1</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">larissa.kolbe@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">184024</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Jo</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">So Young</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Promotion (91)</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Mikrobiologie</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">8</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">8</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">so.young.jo@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">188898</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Henicke</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Erik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Bachelor B.Sc.</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Bioinformatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">9</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">6</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">erik.henicke@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">190431</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Odhiambo</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Robert Ouko</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Promotion (06)</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Biochemie</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">6</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">6</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">robert.odhiambo@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">192787</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Zamani</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Saeedeh</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Molecular Life Sciences</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">5</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">4</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">saeedeh.zamani@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">194769</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Ruiz von Dessauer</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Diego</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Geographie</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">8</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">5</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">diego.ruiz.von.dessauer@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">195258</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Poggemann</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Johanna Gunda Luisa</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master M.A.</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Int.k.Pers.entw.u.Komm.</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">13</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">5</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">johanna.gunda.luisa.poggemann@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">200054</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Lempert</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Kevin</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Informatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">14</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">kevin.lempert@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">200287</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Burock</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Franz</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Informatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">9</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">franz.burock@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">202124</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Tsyndrina</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Amaliia</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Wirtschaftsmathematik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">3</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">amaliia.tsyndrina@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">206048</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Brandl</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Dane Holger</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Informatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">7</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">1</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">dane.holger.brandl@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:StyleID="tabelle-body-right">
+<Data x:Ticketd="1" ss:Type="String">206274</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Rödger</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Niklas</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">ZU</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data ss:Type="String">VVZ</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Master of Science</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">Informatik</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">7</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticketd="1" ss:Type="String">1</Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"> </Data>
+</Cell>
+<Cell ss:StyleID="tabelle-body-center">
+<Data x:Ticked="1" ss:Type="String"/>
+</Cell>
+<Cell ss:StyleID="tabelle-body">
+<Data ss:Type="String">niklas.roedger@uni-jena.de </Data>
+</Cell>
+</Row>
+<Row>
+<Cell ss:MergeAcross="13" ss:StyleID="tabelle-foot">
+<Data ss:Type="String"/>
+</Cell>
+</Row>
+</Table>
+<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+<PageSetup>
+<Header x:Margin="0.4921259845"/>
+<Footer x:Margin="0.4921259845"/>
+<PageMargins x:Top="0.393700787" x:Right="0.393700787" x:Left="0.393700787" x:Bottom="0.393700787"/>
+<Layout x:Orientation="Landscape"/>
+</PageSetup>
+<Print>
+<ValidPrinterInfo/>
+<Scale>54</Scale>
+<HorizontalResolution>600</HorizontalResolution>
+<VerticalResolution>600</VerticalResolution>
+</Print>
+<PageBreakZoom>54</PageBreakZoom>
+<Selected/>
+<LeftColumnVisible>0</LeftColumnVisible>
+<ProtectObjects>False</ProtectObjects>
+<ProtectScenarios>False</ProtectScenarios>
+</WorksheetOptions>
+</Worksheet>
+</Workbook>

@@ -1,0 +1,68 @@
+---
+title: "R course - WS22/23"
+author: "Damian Wollny"
+output:
+  html_document:
+    theme: paper
+    df_print: kable
+date: '`r format(Sys.Date(), "%B %d, %Y")`'
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = T, warning = FALSE, message = FALSE)
+```
+
+```{r}
+library(tidyverse)
+theme_set(theme_classic(base_size=18))
+```
+
+# Advanced data clean up
+
+**Paper**: <https://www.nature.com/articles/s41597-022-01592-z>
+
+**Data**: <https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE174302>
+
+<u>About the paper</u>:
+
+
+## Data exploration
+
+```{r}
+# explain 'skip' for skipping data
+test <- read.csv(file = "/Users/damian_wollny/PI/Lectures/R_course/3rd_cycle/01_advanced_cleanup/parclip_data.csv", skip = 9)
+
+# load data
+cfrna_data <- read.table(file = "~/PI/Lectures/R_course/3rd_cycle/01_advanced_cleanup/GSE174302_all-reads-available-samples.txt", header = T)
+
+# you can also use read.csv()
+test <- read.csv(file = "~/PI/Lectures/R_course/3rd_cycle/01_advanced_cleanup/GSE174302_all-reads-available-samples.txt", sep = "\t")
+
+# Split feature column
+cfrna_data_split <- cfrna_data %>% separate(col = feature, into = c("ensemble_id.1", "biotype", "gene_name", "ensemble_id.2", "ensemble_id.3", "unknown", "transcript_length"), sep = "\\|") %>% 
+  select(-biotype, -ensemble_id.2, -ensemble_id.3, -unknown)
+
+# this also works:
+# cfrna_data %>% separate(col = feature, into = c("ensemble_id.1", "biotype", "gene_name", "ensemble_id.2", "ensemble_id.3", "unknown", "transcript_length"), sep = "\\|") %>% 
+#  select(-c(biotype, ensemble_id.2, ensemble_id.3, unknown)) %>% .[c(1:3), c(1:5)]
+
+# subset data for showncasing:
+sample_data <- cfrna_data_split[1:5,1:5]
+
+# get rid of the ".number" in the ensemble gene_id
+sample_data %>% mutate(ensemble_id.1 = str_remove(ensemble_id.1, pattern = "\\..+"))
+
+# conditional columns
+sample_data %>% mutate(long_genes = if_else(transcript_length > 2000, "yes", "no"))
+
+# what if you have more than 2 conditions?
+sample_data %>% 
+  mutate(gene_length_catergory = case_when(transcript_length < 1000 ~ "short",
+                                           transcript_length > 1000 & transcript_length < 2000 ~ "medium",
+                                           transcript_length > 2000 ~ "long"))
+
+# write.csv() / write.table()
+```
+

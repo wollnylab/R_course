@@ -1,0 +1,248 @@
+---
+title: "Datenanalyse mit R / Data analysis with R - Exam"
+date: '2023-02-09'
+author: 'by Damian Wollny, Julia Micheel, Aram Safrastyan'
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F, warning = FALSE, message = FALSE)
+library(tidyverse)
+```
+
+## General Information
+
+For following exam is build on the so-called `iris` data, which is is pre-installed in every R environment. You should be able to answer all questions without knowing the data. But in order to give you an idea what the data looks like, here are the first 5 rows:
+
+```{r}
+iris %>% head()
+```
+
+... and here is the structure of the data:
+
+```{r}
+str(iris)
+```
+
+
+## Question 1: Filtering dataframes
+
+How was the data filtered to get the resulting dataframe (compare before vs. after)
+
+**Before:**
+```{r}
+set.seed(234)
+iris %>% 
+  group_by(Species) %>% 
+  sample_n(2) %>% 
+  select(Petal.Width, Species) %>% 
+  as.data.frame()
+```
+**After:**
+```{r}
+set.seed(234)
+iris %>% 
+  group_by(Species) %>% 
+  sample_n(2) %>% 
+  select(Petal.Width, Species) %>% 
+  filter(Species != "setosa" & Petal.Width < 2) %>% 
+  as.data.frame()
+```
+
+**Which answer is correct:**\
+
+A.) `filter(Species != setosa & Petal.Width < 2)`\
+B.) `filter(Species != "setosa" & Petal.Width < 2)`\
+C.) `filter(Species != setosa | Petal.Width < 2)`\
+D.) `filter(Species != "setosa" | Petal.Width < 2)`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 2: Plotting data
+
+Which code will give you the plot you can see below:
+
+**Plot:**\
+
+```{r, fig.width=5, fig.height=3}
+ggplot(data = iris, aes(x = Species, y = Petal.Length)) +
+  geom_boxplot(aes(color = Species)) +
+  geom_point()
+```
+
+**Which answer is correct:**\
+
+A.) `ggplot(data = iris, aes(x = Species, y = Petal.Length)) + geom_boxplot(aes(color = Species)) + geom_point()`\
+B.) `ggplot(data = iris, aes(x = Species, y = Petal.Length, color = Species)) + geom_boxplot() + geom_point()`\
+C.) `ggplot(data = iris, aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_point(aes(color = Species))`\
+D.) `ggplot(data = iris, aes(x = Species, y = Petal.Length), color = Species) + geom_boxplot() + geom_point()`\
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 3: Summarize data
+
+Which code will give you the table you can see below:
+
+**Plot:**\
+
+```{r, fig.width=5, fig.height=3}
+iris %>% 
+  group_by(Species) %>% 
+  summarise(count = n(), ave_petal.width = mean(Petal.Width))
+```
+
+**Which answer is correct:**\
+
+A.) `group_by(Petal.Width) %>% summarise(Species, count = n())`\
+B.) `group_by(Species) %>% summarise(count = n(), ave_petal.width = mean(Petal.Width))`\
+C.) `group_by(Species, Petal.Width) %>% summarise(ave_petal.width = mean(), count = n())`\
+D.) `group_by(Species, mean(Petal.Width)) %>% summarise(count = n())`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 4: Regular expression (regex)
+
+Which regular expression will filter the table correctly (compare before vs. after)
+
+**Before:**
+```{r}
+iris %>% 
+  count(Species) 
+```
+**After:**
+```{r}
+iris %>% 
+  count(Species) %>% 
+  filter(str_detect(Species, "o+"))
+```
+
+**Which answer is correct:**\
+
+A.) `filter(str_detect(Species, "o{2}"))`\
+B.) `filter(str_detect(Species, "o?"))`\
+C.) `filter(str_detect(Species, "o*"))`\
+D.) `filter(str_detect(Species, "o+"))`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 5: Tidy data
+
+Which code, will get you the data in the desired format (compare before vs. after)
+
+**Before:**
+```{r}
+wide <- iris %>% 
+  head(1)
+wide
+```
+**After:**
+```{r}
+wide %>% 
+  pivot_longer(cols = !Species, names_to = "Attributes", values_to = "Value") %>% 
+  as.data.frame()
+```
+
+**Which answer is correct:**\
+
+A.) `pivot_longer(cols = !Species, names_to = "Value", values_to = "Attributes")`\
+B.) `pivot_longer(cols = !Species, names_to = "Attributes", values_to = "Value")`\
+C.) `pivot_wider(cols = !Species, names_to = "Value", values_to = "Attributes")`\
+D.) `pivot_wider(cols = !Species, names_to = "Attributes", values_to = "Value")`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 6: Loading data
+
+How do you specifiy the arguments of the read.csv() function in order to load the data that you can see below (Sepal.Length etc is supposed to be the header as shown in the *General Information*):
+
+**Before loading:**
+undesired line 1\
+undesired line 2\
+Sepal.Length,Sepal.Width,Petal.Length,Petal.Width,Species\
+5.1,3.5,1.4,0.2,setosa\
+4.9,3,1.4,0.2,setosa\
+4.7,3.2,1.3,0.2,setosa\
+
+```{r}
+read.csv(file = "~/Desktop/iris_changed.csv", skip = 2, header = T, sep = ".")
+```
+
+
+**Which answer is correct:**\
+
+A.) `skip = 2, header = T, sep = ","`\
+B.) `skip = 2, header = F, sep = ","`\
+C.) `skip = 3, header = F, sep = ","`\
+D.) `skip = 2, header = T, sep = "."`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 7: Heatmaps
+
+**By Julia**
+
+```{r}
+# Julia's code
+```
+
+
+**Which answer is correct:**\
+
+A.) 
+B.) 
+C.) 
+D.) 
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 8: Merging tables
+
+How many rows will the resulting dataframe have <u>after</u> merging the two dataframes **df1** and **df2** using the following code:
+
+`left_join(df1, df2, by = "Species")`
+
+**df1:**
+```{r}
+set.seed(234)
+df1 <- iris %>% 
+  select(Sepal.Length, Sepal.Width, Species) %>% 
+  sample_n(3)
+df1
+```
+**df2:**
+```{r}
+set.seed(111)
+df2 <- iris %>% 
+  select(Petal.Length, Petal.Width, Species) %>% 
+  sample_n(3)
+df2
+```
+
+**Which answer is correct:**\
+
+A.) `2`\
+B.) `3`\
+C.) `5`\
+D.) `6`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 9: Modeling
+
+**By Aram**
+
+```{r}
+# Aram's code
+```
+
+
+**Which answer is correct:**\
+
+A.) 
+B.) 
+C.) 
+D.) 
+
+--------------------------------------------------------------------------------------------------------

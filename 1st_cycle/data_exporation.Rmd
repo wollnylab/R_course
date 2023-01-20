@@ -39,7 +39,7 @@ theme_set(theme_classic(base_size=18))
 
 ```{r}
 # load data
-cov2_data <- read.csv(file = "~/PI/Lectures/R_course/1st_cycle/owid-covid-data.csv") %>% as_tibble()
+cov2_data <- read.csv(file = "./owid-covid-data.csv") %>% as_tibble()
 ```
 
 ### Does the booster help?
@@ -104,6 +104,8 @@ This could be interesting
 
 ```{r}
 cov2_data %>% 
+  na_if("") %>%
+  drop_na(continent) %>%
   filter(date == "2022-09-27") %>% 
   select(location, aged_65_older, total_deaths_per_million, continent) %>% 
   ggplot(aes(x = aged_65_older, y = total_deaths_per_million, color = continent)) +
@@ -127,3 +129,44 @@ cov2_data %>%
   scale_x_continuous(trans = "log10")
 ```
 
+<<<<<<< HEAD
+=======
+# Do people in more developed countries live longer?
+
+A good plot to show what a good correlation looks like (and is) + fit a regression line if needed
+
+```{r}
+cov2_data %>% 
+  drop_na(human_development_index) %>%
+  ggplot(aes(x=life_expectancy, y=human_development_index)) +
+  geom_point() +
+  geom_smooth(method='lm')
+```
+
+# Does covid display any indications of seasonality?
+
+Students will make a lineplot + use the colour= attribute. Perhaps makes sense to display more dates on x axis. Based on a lmited number of countries, it seems covid does exhibit certain patterns (also https://doi.org/10.1016/j.envres.2021.112614 & https://doi.org/10.1186/s12879-021-06785-2)
+
+```{r}
+cov2_data %>%
+  filter(location %in% c("United States", "South Africa", "Germany")) %>% 
+  drop_na(positive_rate) %>%
+  mutate(date = as.Date(date)) %>%
+  ggplot(aes(x=date, y=positive_rate, colour=location)) +
+  geom_line() 
+```
+
+# How many new tests were conducted in Germany?
+
+Germany positive rate has gone up fast as seen in the last plot. Does that mean the number of tests decreased? We filter for dates after January this year and see that number of new tests fluctuates and isn't well correlated with the positive rate, hence showing a real surge in cases for that time period. 
+
+```{r}
+cov2_data %>%
+  filter(location == "Germany") %>% 
+  drop_na(new_tests_smoothed) %>%
+  mutate(date = as.Date(date)) %>%
+  filter(date>"2022-01-01") %>%
+  ggplot(aes(x=date, y=new_tests_smoothed)) +
+  geom_col()
+```
+>>>>>>> a96b5866e432194bca9b7fa76173332b8f7722cc
