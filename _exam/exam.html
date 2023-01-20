@@ -512,18 +512,15 @@ D.)
 <p>How do you specifiy the arguments of the read.csv() function in order
 to load the data that you can see below (Sepal.Length etc is supposed to
 be the header as shown in the <em>General Information</em>):</p>
-<p><strong>Before loading:</strong> undesired line 1<br />
+<p><strong>Data before loading into R:</strong><br />
+</p>
+<p>undesired line 1<br />
 undesired line 2<br />
 Sepal.Length,Sepal.Width,Petal.Length,Petal.Width,Species<br />
 5.1,3.5,1.4,0.2,setosa<br />
 4.9,3,1.4,0.2,setosa<br />
 4.7,3.2,1.3,0.2,setosa<br />
 </p>
-<pre><code>##   Sepal Length.Sepal Width.Petal Length.Petal Width.Species
-## 1     5          1,3         5,1          4,0      2,setosa
-## 2     4        9,3,1         4,0     2,setosa              
-## 3     4          7,3         2,1          3,0      2,setosa
-## 4    NA</code></pre>
 <p><strong>Which answer is correct:</strong><br />
 </p>
 <p>A.) <code>skip = 2, header = T, sep = &quot;,&quot;</code><br />

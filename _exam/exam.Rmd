@@ -157,18 +157,14 @@ D.) `pivot_wider(cols = !Species, names_to = "Attributes", values_to = "Value")`
 
 How do you specifiy the arguments of the read.csv() function in order to load the data that you can see below (Sepal.Length etc is supposed to be the header as shown in the *General Information*):
 
-**Before loading:**
+**Data before loading into R:**\
+
 undesired line 1\
 undesired line 2\
 Sepal.Length,Sepal.Width,Petal.Length,Petal.Width,Species\
 5.1,3.5,1.4,0.2,setosa\
 4.9,3,1.4,0.2,setosa\
 4.7,3.2,1.3,0.2,setosa\
-
-```{r}
-read.csv(file = "~/Desktop/iris_changed.csv", skip = 2, header = T, sep = ".")
-```
-
 
 **Which answer is correct:**\
 
