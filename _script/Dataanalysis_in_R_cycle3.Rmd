@@ -1,0 +1,514 @@
+---
+title: "Dataanalysis with R"
+author: "Julia Micheel"
+output:
+  html_document: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# 05.01.2023 10th lecture
+
+## Cycle 3
+
+## Topics for the upcoming weeks\
+week 10: data handling\
+week 11: heatmaps\
+week 12: merging tables\
+week 13: data modeling basics\
+week 14: simple shiny apps\
+week 15: exam (9th of February)\
+
+In the third cycle we will use different data sets for the different topics we want to cover.\
+
+### Today's topic: Data handling
+topic: loading in and manipulating that is not very clean or has some special features\
+data needs to be downloaded from the cloud (folder week 10)\
+we will use two data sets:\
+
+**parclip_data.csv**\
+-is biological data that we only want to practice loading in properly
+
+-published in Hoell et al., RNA targets of wild-type and mutant FET family proteins. Nat Struct Mol Biol. 2011 Nov 13;18(12):1428-31. doi: 10.1038/nsmb.2163.\
+
+
+**GSE174302_all-reads-available-samples.txt**\
+-is biological/bioinformatical data from cell-free RNA sequencing\
+-published in Chen et al., Cancer type classification using plasma cell-free RNAs derived from human and microbes. Elife. 2022 Jul 11;11:e75181. doi: 10.7554/eLife.75181.\
+-includes different patients (in the columns starting from col2) and the expression values of the different genes listed in column 1 ("feature")\
+-the feature column does not only contain the gene name but also more information like the ensembl id, transcript length,...\
+
+
+```{r eval=FALSE}
+## load the tidyr package to use piping and different functions for data frame manipulation
+library(tidyr)
+
+```
+
+The first task is to load in the parclip_data.csv\
+```{r eval=FALSE}
+parclip_data <- read.csv(file = "C://Users/Julia/Downloads/parclip_data.csv")
+parclip_data %>% View()
+```
+
+This is the regular way to read in the .csv-file.\
+But as you can see the data frame is not usable like that.\
+
+The first problem is that we need to skip eight rows because these were used for annotations and not actual data.\
+```{r eval=FALSE}
+parclip_data <- read.csv(file = "C://Users/Julia/Downloads/parclip_data.csv", skip = 8)
+parclip_data %>% View()
+```
+
+The data is still a mess because the values are not separated with a comma (the default separator) but a semicolon.\
+The separator can be chosen using sep = "".\
+```{r eval=FALSE}
+parclip_data <- read.csv(file = "C://Users/Julia/Downloads/parclip_data.csv", skip = 8, sep = ";")
+parclip_data %>% View()
+```
+
+
+Now we want to load the GSE174302_all-reads-available-samples.txt file.\
+As it is not a .csv-file we use the read.table() function now instead of read.csv().\
+```{r eval=FALSE}
+seq_data <- read.table(file = "C://Users/Julia/Downloads/GSE174302_all-reads-available-samples.txt")
+seq_data %>%  View()
+```
+
+The data is loaded properly, but the first row is not used as the header.\
+This can be done using the "header" variable, set it to "TRUE" (or abbreviated to "T").\
+
+```{r eval=FALSE}
+seq_data <- read.table(file = "C://Users/Julia/Downloads/GSE174302_all-reads-available-samples.txt", header = T)
+seq_data %>%  View()
+```
+
+Actually alternatively you can also use the read.csv() function instead if you choose the correct separator.\
+```{r eval=FALSE}
+# seq_data <- read.csv(file = "C://Users/Julia/Downloads/GSE174302_all-reads-available-samples.txt", sep = "\t")
+# \t is the abbreviation for tab because here the values are separated by tabs instead of commas (or semicolons)
+```
+
+Now we want to work with the seq_data. The first problem we are facing is that the first column (called "feature") contains a lot of information which should be separated into several columns. By this you can, for example, properly filter according to these features.\
+
+We can use the separate() function for this from the package tidyr.\
+
+For this you have to define\
+1. which column should be separated (column named "feature" in our case)\
+2. into which columns they are supposed to be separated (as there are multiple we have to combine them and we choose the names)\
+3. by which symbol the columns should be separated (in this case it's the symbol `|`)\
+Problem: we can not just say sep = "|" because this is also the Boolean operator "OR". Instead we have to "protect" the symbol by using \\ as shown here:\
+
+```{r eval=FALSE}
+seq_data %>%  
+  separate(col = feature, into = c("ensembl_id", "biotype", "gene_name", "ensembl_id2","ensembl_id3", "unknown", "trancript_length"), sep = "\\|")
+```
+The "feature" column is now split into seven new columns with the titles we chose and the information that was separated by the | symbol. Thereby the original "feature" column disappears.
+
+Next we want to remove the last values of the ensembl_id after the . (e.g. convert ENSG00000000003.14 to ENSG00000000003). Here, we can use the stringr package and regular expressions again.\
+```{r eval=FALSE}
+# load stringr and dplyr package
+library(stringr)
+library(dplyr)
+
+# separate the "feature" column into several columns and remove the last digits from the ensembl_id, assign the manipulated data set to a new variable
+
+seq_data_clean <- seq_data %>%  
+  separate(col = feature, into = c("ensembl_id", "biotype", "gene_name", "ensembl_id2","ensembl_id3", "unknown", "transcript_length"), sep = "\\|") %>%  
+  mutate(ensembl_id = str_remove(string = ensembl_id, pattern = "\\..*"))
+```
+For the pattern we want to remove we want to address a dot, a random symbol and whatever comes afterwards. But we can not just use the dot within the pattern because the dot is also the "wildcard symbol" (any symbol). We need to make sure that we target the actual dot and not a random symbol by using two \ in front of the dot. Additionally we want to remove the random symbol afterwards (indicated by the second dot) and whatever comes next (indicated by * or +).
+(Alternatively we can also only use the "protected dot" and the asterisk or plus afterwards because then we target the dot and whatever comes next. But for practice we wanted to show both meanings of the dot symbol here.) 
+
+
+Next we want to add a new column to the table called "length_category". In this we categorize the transcript length values as "short" (up to 2000) or "long" (>2000) using the if_else() function.
+```{r eval=FALSE}
+# for this we create a new data set called "test_data" that includes only the first 5 rows of the seq_data_clean (so everything runs faster)
+test_data <- seq_data_clean %>%  
+  head(5)
+
+# we add a new column with the length_categorization according to the transcript_length and assign it to a new variable
+new_test_data <- test_data %>% mutate(length_category = if_else(condition = transcript_length > 2000, true = "long", false = "short"))
+```
+
+
+Now we save the newly generated table as .csv-file using the write.csv()-function. There you only have to define the data frame you want to save (x) and the path where it is supposed to be saved including the file name and .csv-ending (file)
+```{r eval=FALSE}
+write.csv(x = new_test_data, file = "C://Users/Julia/Desktop/new_test_data.csv")
+```
+
+
+# 12.01.2023 11th lecture
+## Today's topic: heatmaps
+
+### What are heatmaps?
+
+- ideal for showing 3 variables in one plot, e.g. how many calls a company gets per weekday and per hour of day (2 dimensions day + time and the number of calls indicated by the color gradient)\
+
+- heatmaps many times contain dendrograms. Dendograms are formed by hierarchical clustering. They show relationships between objects by branches. In heatmaps, dendrograms shows how similar samples are. The color indicates which attributes of the data are responsible for the clustering of the dendrogram.\
+
+- there are a lot of different ways in R to create heatmaps e.g. a base R function and several packages. Our personal recommendation is pheatmap\
+
+- most important is the shape of the input data frame: the data frame (or matrix) need to be in the **wide format** and all data must be **numeric**. Rows and columns for labeling the samples need to be converted to **row names** and **column names**. Additional rows or columns that shouldn't be plotted need to be deleted. For data wrangling different packages like dplyr and tibble can be used. There is a whole library collection called "tidyverse" that includes useful packages like these dplyr, tibble, tidyr, ggplot2 and others.\
+
+-if you want (and are able to) download tidyverse you can activate all of them at once\
+-if the tidyverse installation failed, we can also install/load the single libraries dplyr, ggplot2, tibble\
+
+- additionally we will need the pheatmap package\
+
+
+### First dataset: German weather data from the DWD
+Data source: <https://opendata.dwd.de/climate_environment/CDC/regional_averages_DE/>\
+modified table with mean temperatures in Germany per year + per month\
+
+- the months of the data are indexed by numbers. E.g. 1 means January, 2 means February etc\
+
+- for creating the heatmap, we need to convert the data into the **wide format** (columns are months, rows are the years) using pivot_wider()\
+
+- the column_to_rownames() function from the tibble library converts a **specified column into the row names**\
+
+- colnames() function can be used to **rename the column names**\
+
+```{r}
+## install (in necessary) and load tidyverse packages (or the whole tidyverse package collection instead if you have it)
+library(tibble)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+## install and load the pheatmap library
+library(pheatmap)
+
+## load data
+meantemp_germany <- read.csv(file = "C:/Users/Julia/Desktop/Promotion/teaching/dataanalysis_in_R/heatmap_lecture/meantemp_germany.csv", sep = ",")
+
+## modify data (wide format, all data needs to be numeric)
+meantemp_germany_clean <- meantemp_germany %>% 
+  select(year, month, mean_temp_ger) %>% 
+  filter(year >= 1972) %>% 
+  pivot_wider(names_from = month, values_from = mean_temp_ger)
+
+meantemp_germany_clean <- column_to_rownames(meantemp_germany_clean, 'year')
+
+colnames(meantemp_germany_clean) <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+```
+
+### Heatmap generation
+
+- now that the data is in the right shape, a heatmap can be easily plotted\
+
+```{r}
+#default pheatmap function
+pheatmap(meantemp_germany_clean)
+```
+
+- data is clustered and dendrograms are added by default\
+- if you do not want the columns and/or rows to be clustered, you can turn the dendrogram off for the rows and columns individually\
+
+```{r}
+#turn off default clustering
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE)
+```
+
+- there are a lot of small functions to modify the plot e.g. change border colors, add gaps between rows or columns, add annotations:\
+
+```{r}
+#change border colors 
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = "white")
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = "black")
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = F)
+
+#add gaps between columns and rows
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = F, gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49))
+
+#add a title to the plot
+pheatmap(meantemp_germany_clean, cluster_rows = FALSE, cluster_cols = FALSE, border_color = F, gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), main = "Mean temperatures in Germany 1972 - 2022")
+```
+
+
+- if you want to annotate columns you can generate a new data frame and use the annotation_col argument\
+-the annotation data frame and the input data frame have to have the exact same names\
+
+```{r}
+##add annotation
+#create annotation data frame
+
+season_df <- data.frame("season" = c("Winter", "Winter", "Spring", "Spring", "Spring", "Summer", "Summer", "Summer", "Autumn", "Autumn", "Autumn", "Winter"))
+
+#change row names 
+row.names(season_df) <- c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = F, gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df)
+```
+
+
+- in order to change the angle of the x-axis label, use the `angle_col` argument\
+
+```{r}
+# change label angle of columns (270, 0, 45, 90, 315 degree are possible)
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45)
+```
+
+
+- if you want the values of the data to be shown in the heatmap, use the argument `display_numbers`\
+
+```{r}
+# change label angle of columns
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T)
+```
+
+- in order to save the heatmap (or any plot) - use the ggsave() function from the ggplot2 library. For that, we need to assign the heatmap to a variable so that R knows **what** you want to save\
+
+```{r}
+# assign heatmap to a variable
+temp_heatmap <- pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T)
+
+# save the plot as e.g. png (jpg, svg, pdf etc is also possible, just change the file name extension)
+ggsave(
+  "~/Desktop/heatmap.png", #path where it is supposed to be saved + file name + file name extension of chosen format
+  plot = temp_heatmap, #plot you want to save
+  width = 15, #optional
+  height = 20, #optional
+  units = c("cm") #optional
+)
+```
+
+With these settings the annotation labels and the column label are a bit cropped. To solve this problem I changed the cellwidth argument.\
+
+```{r}
+# assign heatmap to a variable
+temp_heatmap <- pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T, cellwidth = 20)
+
+# save the plot as e.g. png (jpg, svg, pdf etc is also possible, just change the file name extension)
+ggsave(
+  "~/Desktop/heatmap.png", #path where it is supposed to be saved
+  plot = temp_heatmap, #plot you want to save
+  width = 15, #optional
+  height = 20, #optional
+  units = c("cm") #optional
+)
+```
+
+### Additional functions
+
+- here are some more arguments with which you can manipulate your heatmap that I didn't cover in the lecture:\
+
+```{r}
+## change annotation colors
+#create color list
+season_color = list(season = c("Winter" = "blue", "Spring" = "green", "Summer" = "red", "Autumn" = "yellow"))
+
+#add annotation colors argument and the color list
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, annotation_colors = season_color)
+
+#here is an overview of all the color names you can use implemented in R
+#http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+
+season_color_more = list(season = c("Winter" = "skyblue", "Spring" = "darkolivegreen3", "Summer" = "sienna1", "Autumn" = "lightgoldenrod1"))
+
+#add annotation colors argument and the color list
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, annotation_colors = season_color_more)
+
+
+#there are also other color formats you can pick colors from, e.g. the hex format so you have more options/shades
+season_color_hex = list(season = c("Winter" = "#4477AA", "Spring" = "#228833", "Summer" = "#EE6677", "Autumn" = "#CCBB44")) 
+
+#add annotation colors argument and the color list
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, annotation_colors = season_color_hex)
+
+
+############################################
+
+#skip row names
+#if you want to label only every second row e.g. you can do so by entering the row labels within the labels_rows function
+#all the rows you want to skip have to be indicated by empty characters ""
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, border_color = "white", gaps_col = c(3, 6, 9), gaps_row = c(9, 19, 29, 39, 49), annotation_col = season_df, angle_col = 45, display_numbers = T, labels_row = c("1972", "", "1974", "", "1976", "", "1978", "", "1980", "", "1982", "", "1984", "", "1986", "", "1988", "", "1990", "", "1992", "", "1994", "", "1996", "", "1998", "", "2000", "", "2002", "", "2004", "", "2006", "", "2008", "", "2010", "", "2012", "", "2014", "", "2016", "", "2018", "", "2020", "", "2022"))
+
+
+############################################
+
+
+#change color of the gradient
+#if you want to change the colors of the gradient there are a lot of resources you can pick different colors or (diverging) color schemes from
+#here I will provide a small overview of functions you can use but there are way more options
+#define the color gradient always using the color argument 
+
+### hcl_palettes
+## using the link you can find a collection of hcl color palettes where you can pick one from by using hcl.colors and entering the name
+##the number indicates the intersections of the gradient
+## https://colorspace.r-forge.r-project.org/articles/hcl_palettes.html
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, color = hcl.colors(100, "Blue-Red"))
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, color = hcl.colors(100, "Green-Brown"))
+
+
+### colorRampPalette
+##you can pick colors and create your own color scheme using colorRampPalette
+##in this case you should define the colors manually and save the function (e.g. "my_colors")
+##then call the list in the color argument
+my_colors <- colorRampPalette(c("skyblue3", "white", "violetred3"))      # Manual color range
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, color = my_colors(100), border_color = "black")
+
+
+### using the color brewer package
+#https://www.geeksforgeeks.org/introduction-to-color-palettes-in-r-with-rcolorbrewer/
+#install.packages("RColorBrewer")
+library("RColorBrewer")
+##show (diverging) color schemes in the color brewer package, you can define to only get color blind friendly schemes
+display.brewer.all(type="div", colorblindFriendly = T)
+##choose a scheme, assign it to a color function (n indicates intensity)
+my_colors2 <- colorRampPalette(brewer.pal(n=9,name="PiYG"))(255)
+pheatmap(meantemp_germany_clean, cluster_cols = F, cluster_rows = F, color = my_colors2, border_color = F)
+```
+
+
+### Second data set: Sequencing data
+
+a small subset of the sequencing data we already used in lecture 10\
+
+- Different patients are separated in different columns\
+- these are patients with two different types of cancer:\
+- HCC = hepatocellular carcinoma (liver cancer), CRC = colorectal carcinoma\
+- data needs to be cleaned up (as described above) in order to use the object as the input for the heatmap:\
+- get rid of unnecessary columns and rename the row names\
+
+```{r}
+# load data
+seq_data_clean <- read.csv(file = "C:/Users/Julia/Desktop/Promotion/teaching/dataanalysis_in_R/heatmap_lecture/seq_data_clean.csv", sep = ",")
+
+# get rid of unnecessary X column (you can also use select instead as we did above)
+seq_data_clean$X <- NULL
+
+# use gene names column as row names
+seq_data_clean <- column_to_rownames(seq_data_clean, "gene_name")
+
+# generate default heatmap
+pheatmap(seq_data_clean)
+```
+
+The default heatmap shows values with a lot of low and a few very high values. According to these values the color gradient is set. So it is hard to see differences between within all lowly expressed genes (almost the whole heatmap appears blue). In this case **normalization** is necessary. There is a normalization function implemented in pheatmap and you can decide if you want to use it to normalize the rows or the columns. In our case we have to normalize the rows (the different expression values per gene). There are a lot more normalization functions calculating different things (e.g. in base R). If you want to use one of them for your data please check the documentation what actually is calculated there. Here, the mean and standard deviation are calculated (per row = gene) and then it calculates (value-mean)/standard deviation. Zero means the value equals the mean, positive values are higher than the mean, negative numbers lower than the mean.\
+
+
+```{r}
+# normalize the data per row
+pheatmap(seq_data_clean, scale = "row")
+```
+
+
+
+
+# 19.01.2023 12th lecture
+
+## Today's topic: Merging tables
+
+### Creating example data frames
+First, we want to create example data frames. Later on we will merge them with each other.\
+For creating the example data frames we are using the data.frame() function (base R). Within the function you have to specify your column name and the values (as a combination). If you want to create several columns they need to be separated by comma.\
+```{r}
+library(dplyr)
+
+#create example data frame 1 with one column called "id" and the values 1 and 2 and a second column "fruits" with the values apple and banana
+df1 <- data.frame(id = c(1, 2),
+                  fruits = c("apple", "banana")) 
+
+#second data frame with the same pattern
+df2 <- data.frame(id = c(2, 3),
+                  vegetables = c("tomato", "potato"))
+```
+
+### Merging data frames
+In the package dplyr, there are a lot of different functions for merging data frames called **inner_join**, **full_join**, **left_join**, **right_join** and **anti_join** with different settings.\
+
+Within the functions you always have to specify the data frames to be merged and the key by which they are supposed to be merged (= the column they have in common).\
+
+The **inner_join** function creates a new data frame including all observations that you have in **both** data frames (according to the key). This is a good option if you want to work only with the observations present in both columns, otherwise you lose a lot of information.\
+
+```{r}
+#merge only the observations found in both data frames (according to the key)
+inner_join(df1, df2, by = "id")
+```
+
+If you want to **keep all the data** even if the keys are not found in both data frames you need the function **full_join**.
+This is a save option to not lose any data but you can get a lot of NA values.\
+
+```{r}
+#merge all observations
+full_join(df1, df2, by = "id")
+```
+Using **left_join** you keep everything in the "left" data frame (= the one you put first, e.g. in this case df1) and only values from the "right" data frame (= df2) are kept that match the key.\
+So in this case the order of the data frames is important.\
+If you want to keep all vegetables and only want to add the fruits with matching keys you have two options:\
+1. put df2 as "left" (change the order) or 2. use **right_join**
+
+```{r}
+#merge the data frames based on df1's keys
+left_join(df1, df2, by = "id")
+
+#merge the data frames based on df2's keys
+left_join(df2, df1, by = "id")
+
+right_join(df1, df2, by = "id")
+```
+
+### Common problems upon merging data frames
+1) **The key is not the same**\
+E.g. in df1 you have "id" and in df2 you have "ID" as key columns.\
+in this case the data frames can not be merged like shown above.\
+The problem can be solved by renaming the column or by defining keys from both data frames.\
+```{r}
+#create a new df2 with capitalized ID instead of id
+#now the keys are not the same
+df2 <- data.frame(ID = c(2,3),
+                  vegetables = c("tomato", "potato"))
+
+#merge the data frames by defining keys for both data frames ("id" refers to df1, "ID" to df2)
+inner_join(df1, df2, by = c("id" = "ID"))
+```
+
+
+2) **Duplicate keys in one of the data frames**
+If you have duplicated keys in one of the data frames (which you don't want to remove e.g. because they contain additional information in the other columns) and you perform left_join with another data frame you will create duplicates of the second data frame in the new data frame. (see example below)\
+
+
+```{r}
+#create df1 with a duplicate key (2 is included twice)
+df1 <- data.frame(id = c(1, 2, 2, 3),
+                  fruits = c("apple", "banana", "banana", "orange"))
+
+#create df2 with single keys
+df2 <- data.frame(id = c(2, 3),
+                  vegetables = c("tomato", "potato"))
+
+#merge the data frames
+left_join(df1, df2, by = "id")
+```
+
+Now we have duplicated the tomato in the vegetable column because the key was "called" twice by the first data frame.\
+This might be harmful to your data but there is no warning or error message for that.\
+So you have to keep this in mind and think of a way to check that your data is still correct after merging (=sanity check).\
+
+This could be done e.g. using the count function before and after merging to see if the number of observations changes.\
+
+
+3) **Keys are almost identical**
+If the keys are very similar but not identical you can easily lose data by merging.\
+There is a way to check which data could be lost by using a particular key:\
+Using **anti_join** you can see which data is in df1 but **not** in df2 using the key. With this you can find the data that would be lost by using this key.\
+
+```{r}
+#creating two data frames with one key they have in common (germany) and another key that is slightly different (denmark vs. denmark.)
+df1 <- data.frame(id = c("germany", "denmark"),
+                  fruits = c("apple", "banana"))
+
+df2 <- data.frame(id = c("germany", "denmark."),
+                  vegetables = c("tomato", "potato"))
+
+#merge the data frames
+anti_join(df1, df2, by = "id")
+```
+**anti_join** now gives you "denmark" because it is part of df1 but not of df2. 
+
+

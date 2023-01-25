@@ -17,7 +17,7 @@ library(tidyverse)
 For following exam is build on the so-called `iris` data, which is is pre-installed in every R environment. You should be able to answer all questions without knowing the data. But in order to give you an idea what the data looks like, here are the first 5 rows:
 
 ```{r}
-iris %>% head()
+iris %>% head(5)
 ```
 
 ... and here is the structure of the data:
@@ -60,7 +60,36 @@ D.) `filter(Species != "setosa" | Petal.Width < 2)`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 2: Plotting data
+## Question 2: Plotting data - *Part1*
+
+You want the plot you can see below using the following code:
+
+**Code:**\
+
+```{r, echo = TRUE, eval=F}
+iris %>% # line 1
+  ggplot(aes(x = Species, y = Sepal.Length, color = Species)) %>%  # line 2
+  geom_boxplot() # line 3
+```
+
+**Plot:**\
+
+```{r, fig.width=5, fig.height=3}
+iris %>% 
+  ggplot(aes(x = Species, y = Sepal.Length, color = Species)) +
+  geom_boxplot() 
+```
+
+**Is the code correct?**\
+
+A.) `code is correct`\
+B.) `line 1 contains an error`\
+C.) `line 2 contains an error`\
+D.) `line 3 contains an error`\
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 3: Plotting data - *Part2*
 
 Which code will give you the plot you can see below:
 
@@ -74,14 +103,14 @@ ggplot(data = iris, aes(x = Species, y = Petal.Length)) +
 
 **Which answer is correct:**\
 
-A.) `ggplot(data = iris, aes(x = Species, y = Petal.Length)) + geom_boxplot(aes(color = Species)) + geom_point()`\
-B.) `ggplot(data = iris, aes(x = Species, y = Petal.Length, color = Species)) + geom_boxplot() + geom_point()`\
-C.) `ggplot(data = iris, aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_point(aes(color = Species))`\
-D.) `ggplot(data = iris, aes(x = Species, y = Petal.Length), color = Species) + geom_boxplot() + geom_point()`\
+A.) `ggplot(data = iris, mapping = aes(x = Species, y = Petal.Length)) + geom_boxplot(aes(color = Species)) + geom_point()`\
+B.) `ggplot(data = iris, mapping = aes(x = Species, y = Petal.Length, color = Species)) + geom_boxplot() + geom_point()`\
+C.) `ggplot(data = iris, mapping = aes(x = Species, y = Petal.Length)) + geom_boxplot() + geom_point(aes(color = Species))`\
+D.) `ggplot(data = iris, mapping = aes(x = Species, y = Petal.Length), color = Species) + geom_boxplot() + geom_point()`\
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 3: Summarize data
+## Question 4: Summarize data
 
 Which code will give you the table you can see below:
 
@@ -102,7 +131,7 @@ D.) `group_by(Species, mean(Petal.Width)) %>% summarise(count = n())`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 4: Regular expression (regex)
+## Question 5: Regular expression (regex)
 
 Which regular expression will filter the table correctly (compare before vs. after)
 
@@ -127,7 +156,7 @@ D.) `filter(str_detect(Species, "o+"))`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 5: Tidy data
+## Question 6: Tidy data
 
 Which code, will get you the data in the desired format (compare before vs. after)
 
@@ -153,7 +182,7 @@ D.) `pivot_wider(cols = !Species, names_to = "Attributes", values_to = "Value")`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 6: Loading data
+## Question 7: Loading data
 
 How do you specifiy the arguments of the read.csv() function in order to load the data that you can see below (Sepal.Length etc is supposed to be the header as shown in the *General Information*):
 
@@ -175,7 +204,7 @@ D.) `skip = 2, header = T, sep = "."`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 7: Heatmaps
+## Question 8: Heatmaps
 
 **By Julia**
 
@@ -193,39 +222,54 @@ D.)
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 8: Merging tables
+## Question 9: Merging tables - *Part1*
 
-How many rows will the resulting dataframe have <u>after</u> merging the two dataframes **df1** and **df2** using the following code:
+How many <u>rows and columns</u> will the resulting dataframe have <u>after</u> merging the two dataframes **df1** and **df2** using the following code:
 
-`left_join(df1, df2, by = "Species")`
+`left_join(df1, df2, by = "ID")`
 
 **df1:**
 ```{r}
-set.seed(234)
+set.seed(123)
 df1 <- iris %>% 
   select(Sepal.Length, Sepal.Width, Species) %>% 
-  sample_n(3)
+  sample_n(3) %>% 
+  mutate(ID = c(1:3))
 df1
 ```
 **df2:**
 ```{r}
-set.seed(111)
+set.seed(123)
 df2 <- iris %>% 
   select(Petal.Length, Petal.Width, Species) %>% 
-  sample_n(3)
+  sample_n(3) %>% 
+  mutate(ID = c(2:4))
 df2
 ```
 
 **Which answer is correct:**\
 
-A.) `2`\
-B.) `3`\
-C.) `5`\
-D.) `6`
+A.) Columns: `4`; Rows: `3`\
+B.) Columns: `4`; Rows: `6`\
+C.) Columns: `5`; Rows: `3`\
+D.) Columns: `6`; Rows: `3`\
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 9: Modeling
+## Question 10: Merging tables - *Part2*
+
+If you execute the code: `left_join(df1, df2, by = "ID")` on the dataframes **df1** and **df2** as described in Question 8, how many *NA* values will the resulting table have in total?
+
+**Which answer is correct:**\
+
+A.) `0`\
+B.) `1`\
+C.) `2`\
+D.) `3`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 11: Modeling
 
 **By Aram**
 

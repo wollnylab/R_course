@@ -1,0 +1,721 @@
+---
+title: "Dataanalysis with R"
+author: "Julia Micheel"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# 20.10.2022 1st lecture
+
+## administrative information:
+-beginners course, taught in English\
+-for people who need the credit points: homework/exam contribute to the grade 50% each\
+-exam date: 09.02.2023\
+
+### literature:
+-not needed but recommended\
+-available for free: R for data science (Hadley Wickham) <https://r4ds.had.co.nz/>\
+
+### course philosophy:
+-contextual learning (learning while pursuing a goal)\
+
+### outline of the course: 
+-3 data analysis cycles\
+1. cycle: COVID-19 dataset\
+2. cycle: Global fertilizer usage dataset\
+3. cycle: flexible, suggestions welcome\
+
+
+## Introduction to R
+
+### Reasons to use R
+-manipulating data\
+-statistical analysis\
+-visualization\
+
+-easy to learn\
+-free + open source\
+-large community (help+libraries)\
+-good package management (CRAN)\
+-R vs. python discussion (pros of R: libraries, data visualization, pros of python: faster for massive data sets,..)\
+
+
+### R Studio interface:
+-Editor (R script that can be saved as an .R document)\
+-Console (enter and run code directly)\
+-Environment\
+-Output, Files, Packages,...\
+
+### First steps:
+-assigning variables (letters, numbers, underscores, dots are fine, but should always begin with a letter)\
+-run code using Command+Enter (Mac users), Control+Enter (everyone else)\
+-comment code using # (will not be run)\
+
+### Introduction to R Markdown
+-language for creating formatted text within R\
+-includes text as well as code chunks and the plots that are created using the code\
+-images, links etc can be added\
+-open a Markdown file: File > New File > R Markdown..\
+
+#### Structure of the R Markdown:
+
+##### YAML Header
+-between --- signs on top\
+-includes title, author, date, output format\
+
+##### Code chunks  
+-separated from the text using ´´´{r ...} ....``` as shown below\
+-code chunks can be run individually or all at once\
+  
+```{r example_code}
+#assigning a value to the variable called "example"
+example <- 2+2
+```
+
+##### Text
+-everything else is text\
+-works like a text editor\
+-font size can be changed using #\
+-bold text using **text**\
+-enter a link with brackets <link>\
+-more text editing functions are shown in the cheat sheet: <https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf>\
+  
+##### Knit function 
+-produce output file\
+-e.g. as html or PDF\
+
+
+# 27.10.2022 2nd lecture
+
+## Recap\
+
+### what is Markdown?\
+-Markup language\
+-RMD file is the document to work in\
+-can be compiled to a HTML file (most straight forward)\
+also PDF + word is possible (leads to errors sometimes)\
+
+### what needs to be installed to have an output PDF?\
+install.packages('tinytex')
+tinytex::install_tinytex()
+
+### where is my output file?\
+-if you click on the knit button the HTML is compiled\
+-same folder as Rmd-File, same name\
+
+### Markdown cheatsheet\
+-a helpful summary of different functions is shown in the cheat sheet: <https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf>\
+
+### Code execution:\
+-using the cursor (Run in the upper right corner, you can choose between Run everything, one line, current chunk... )\
+-use keyboard: Command+Enter (Mac users), Control+Enter (everyone else)\
+
+### Variable need to be assigned before they are used\
+-sounds trivial but it can be a source of error if you work with long scripts/many variables\
+-pay attention that every variable in the environment is defined correctly before it is used\
+
+## Markdown template generation (Homework file)\
+-Header indicated by --- (title, name, date, output)\
+-hashtag sign: in markdown it makes the font bigger, within code it is used for commenting (will not be executed)\
+-remove all assigned variables from environment: clear environment (using the brush symbol)\
+
+-most simple example code:
+```{r}
+#my code belongs here
+#these are comments that will not be executed when you run the code
+#the code in the next line will assign the value "2+2" to the variable called "example"
+example <- 2+2
+#example will be shown in your environment after you executed the code
+```
+
+## Downloading data for the cycle 1
+
+Source of the data:
+<https://github.com/owid/covid-19-data/tree/master/public/data\>
+
+Download the csv-file in paragraph "Download our complete COVID-19 dataset\
+Remember the path to where the file is saved on your computer (e.g. the download folder)\
+
+Now we will load data into R using the read.csv() is a function\
+
+
+```{r eval=FALSE}
+#loading data using "read.csv()" function, file = the path to where the file is stored
+cov_data <- read.csv(file = "/Users/Julia/Downloads/owid-covid-data.csv")
+
+#now we want to explore our data using the head, tail and str functions
+##head shows the first rows of the data frame, with n=x you define how many rows are shown; in this case it's 3 rows
+head(cov_data, n=3)
+##tail shows the last rows, in this case the last 3 rows
+tail(cov_data, n=3)
+
+## str shows the structure of the data frame
+## the 67 variables are the different columns, e.g. iso_code, continent, location,...
+## behind the : you can see the data type of this column (chr, num, etc). this is explained below
+## behind the data type, there are the values of the first few rows per column
+str(cov_data)
+
+```
+
+Sidenote: What is a function?\
+the structure of a function in R\
+function_name(argument)\
+whatever you put into brackets is the input, called argument\
+in this case, read.csv() is the function that is executed\
+the path to your file is the argument\
+
+If you don't know how different functions work you can always use the help function to get more information
+```{r eval=FALSE}
+#getting help to use the read.csv() function with description, usage, etc...
+help(read.csv)
+```
+
+
+## Data types
+Data can be stored as different data types within a data frame\
+
+-character (abbreviation chr; names, countries, dates... e.g. "AFG", , "Asia", "Afghanistan")\
+-numeric (abbreviation num; any real numbers, e.g. 0.5)\
+-integer (integer numbers, e.g. 1, 2, 5, 100)\
+-logical (e.g. true or false)\
+
+
+Different kinds of tables\
+-Data.frame (all columns can have different types (e.g. mixture of characters and numeric))\
+-Matrix (all values are same data type)\
+
+
+
+# 03.11.2022 3rd lecture
+
+## Recap
+
+### Load data into RStudio by "clicking"\
+-doesn't require to type the path\
+-in environment (upper right window) click on the item that looks like a table with green arrow (Import data set)\
+-to open a .csv file, choose "From text (readr)..."\
+-a window opens where you can choose the file (browse)\
+-a few settings e.g. the delimiter can be chosen (comma, tab,...)\
+-then click on "import"\
+-the code is shown in the console afterwards\
+
+### Slashes in paths\
+-for Windows, Linux and Mac there are different types of slashes in paths\
+-Windows: slash `/` \
+-Linux/Mac: backslash `\` \
+
+### Tab button\
+-tab-key can be used for auto completion\
+-can help with typos\
+-gives you options for the path\
+
+### in R Markdown: close code chunks\
+-within Markdown you can only write code in dedicated code chunks\
+-you have to open and close the code chunks with ```\
+-otherwise you can not run the code\
+-if you didn't close it and try to run, nothing will be executed\
+
+```{r}
+#this is a proper code chunk that is opened and closed
+```
+
+
+### Removing single variables from the environment: rm() function\
+-last week we introduced how to remove all variables from the environment (using the brush icon in the upper right window)\
+-you can also delete single variables from the environment\
+
+```{r}
+#assigning a variable y (will be saved in the environment)
+y <- 4
+#removing the variable y from the environment
+rm(y)
+```
+
+### View data sets in a new window\
+-you can see the whole table you loaded by clicking on the table icon behind the table in the environment\
+-this executes the function view()\
+-the table opens in a new window and you can look at it\
+-but you can not manipulate it\
+
+
+
+## Data manipulation (using Dplyr)\
+-so far we only used functions that are implemented in R (so called Base R functions)\
+-but there are way more functions that can be used after downloading libraries\
+
+### what is a library?\
+-a collection of functions\
+-today, we are using a library called "dplyr"\
+
+### how to install the library?\
+-in the lower right window there is a tab called packages\
+-there, click the "install" icon\
+-type in the name of the package you want to install\
+-click "install"\
+-the library is downloaded and installed now permanently on your computer\
+-but it needs to be activated every time again when you want to use it\
+
+### how to activate the library?\
+-needs to be activated every time you want to use it again\
+-function called library()\
+
+```{r}
+#activate library
+library(dplyr)
+```
+
+
+### different functions of dplyr\
+
+-the functions have a similar structure\
+-after the functions (within the brackets) you first put the name of the data frame that should be manipulated\
+-afterwards, separated with a comma, other variables depending on the function:\
+
+Important functions are:\
+
+#### filter:\
+-filters data by row\
+-you have to define the data frame, the column by which it should be filtered and the value that is filtered\
+(= all rows with this value will be kept, the others get removed)\
+
+```{r eval=FALSE}
+#using the filter function to filter out all the rows that include Germany as the location
+#structure: filter(data frame, column == variable) 
+filter(cov_data, location =="Germany")
+
+#using the filter function for multiple variables at once (separated by a comma)
+#first the first function is executed (you remove all continents but Europe), afterwards the second function is executed (filter out (remove) all rows total cases that are not exactly five)
+#as a result you will get all rows with continent Europe and total cases 5
+filter(cov_data, continent =="Europe", total_cases == 5)
+
+#filtering out all continents but Europe and filtering out all countries but Afghanistan will result in an empty data frame 
+filter(cov_data, continent =="Europe", location =="Afghanistan")
+
+#you can also filter all values greater or less than a certain value
+filter(cov_data, continent =="Europe", total_cases > 200)
+
+#you can also filter all values greater than or equal or less than or equal to a certain value
+filter(cov_data, continent =="Europe", total_cases <= 200)
+```
+
+
+#### select:\
+-filters by column\
+-you have to define the data frame and the columns that should be kept\
+-the other columns get removed\
+
+```{r eval=FALSE}
+#filter out columns
+#you have to name the columns that you want to keep, the others will be removed
+select(cov_data, location, date, total_cases)
+
+#you can assign your modified data set to a new variable so you fand the modified data set in your environment
+subset_cov_data <- select(cov_data, location, date, total_cases, new_cases)
+```
+
+
+#### mutate:\
+-adds a column to an existing data frame\
+-you have to define the data frame and the column that should be added\
+-you can specify one value (number, word etc) that should be added to the new column in each row\
+-you can also perform one operation on the values in the table and have the result in the new column (e.g. sum of two columns in the new column)\
+
+```{r eval=FALSE}
+#adding a column
+mutate(subset_cov_data, new_column = 5)
+mutate(subset_cov_data, new_column = "word")
+mutate(subset_cov_data, sum_of_cases = total_cases + new_cases)
+```
+
+
+#### count:\
+-you can count how many rows you have for specific values of a column\
+-(e.g. how many rows do we have per location? --> each row will be one country and the number of rows is counted in a new column)\
+
+```{r eval=FALSE}
+#count function
+location_instances <- count(subset_cov_data, location)
+```
+
+
+#### rename:\
+-rename a column\
+-you have to define the data frame, the new name = the old name\
+
+```{r eval=FALSE}
+#rename the column called "n" to "instances" in the data frame location_instances
+location_instances <- rename(location_instances, instances = n)
+```
+
+
+#### more functions:\
+if you want to know more functions, dplyr has a cheat sheet: <https://posit.co/wp-content/uploads/2022/10/data-transformation-1.pdf>
+
+
+### Piping\
+-piping is an operation for using multiple functions one after another\
+-pipe operator: %>% (operator that links the different functions)\
+-all piped functions will be done with the same data set so you put the data set name in front\
+-the functions are added afterwards, linked by pipe operators\
+-now the style changes a bit: you don't have to put the data set in every bracket of the function again\
+
+```{r eval=FALSE}
+#piping
+#combination of multiple functions
+# the data set "cov_data" will be first filtered by location (Germany) and afterwards specific columns are selected (location, date, new_cases)
+cov_data %>% filter(location == "Germany") %>% select(location, date, new_cases)
+```
+
+
+
+
+# 10.11.2022 4th lecture
+
+## Recap\
+
+### Homework\
+-solutions are uploaded in the cloud now\
+-different functions can be used to obtain the same goal\
+-one person filtered and saved North America and South America as different variables, then combined them using a new function\
+-the function is called rbind (meaning row bind)\
+-how rbind works: you combine two data sets by rows (dataset1 and dataset2 are merged with dataset1 on top and dataset2 below)\
+e.g. rbind(dataset1, dataset2)\
+
+```{r eval=FALSE}
+#filtering the datasets by row according to the continents, assigning variables to them 
+north_america <- filter(cov_data, continent == "North America") 
+south_america <- filter(cov_data, continent == "South America") 
+
+#merging the data sets together in a new data set
+america <- rbind(north_america, south_america)
+```
+
+
+### Using libraries\
+-installing needs to be done once\
+-but if you want to use it you have to load it every time again\
+
+
+### filtering\
+-use | as "or" if you want to filter for multiple things combined\
+-if you separate multiple variables by comma they are filtered one after another (from left to right)\
+-this won't work if you first filter South America (then all the other continents are removed) and then North America afterwards\
+
+
+### style\
+-each piped function can be in a new line or all in the same line\
+-doesn't influence the outcome, only a matter of preference\
+
+
+## Making plots (using ggplot2)\
+
+-today we use a new library called ggplot2\
+-philosophy: "grammar of graphics"\
+-if you know the grammar you will be able to make any type of plot, it's always the same principle\
+-the beginning is a bit hard but it is very powerful\
+
+-the code is written in layers:\
+-1st layer = initializing the plot by defining the data set\
+-2nd layer = data points are added (as dot plot, bar plot,...+ definition of x and y + aesthetic settings (dot size, color, shape...))\
+-3rd layer = axis labeling etc\
+
+-first, the library needs to be installed (once)\
+-afterwards you have to load it by library(ggplot2)\
+
+-lots of different types of plots can be done, we are starting with a **scatter plot** (dot plot)\
+
+### Question: What is the relationship between population age and how many people died in each country?\
+
+Before we can start plotting, the data needs to be manipulated\
+-issue: Africa is saved as a country not a continent\
+-solution: we kick out all the lines now where the column "continent" is empty\
+
+```{r eval=FALSE}
+#if you are starting from here data needs to be loaded again
+#library dplyr needs to be loaded again
+
+#we assign this "cleaned" data set to a new variable (called "cov_data_clean")
+# != is the opposite of == (meaning everything that is not equal to)
+# "" is indicating the empty data (no content between the quotation marks)
+cov_data_clean <- cov_data %>% filter(continent != "") 
+
+#check if it worked
+#if we want to filter the rows now with location "Africa" it should be empty because we filtered it out
+cov_data_clean %>% filter(location == "Africa")
+```
+
+Now we will assign a new data set that consists of the cleaned data set but with only a selection of columns as indicated\
+-additionally we only filter one particular date\
+-both steps are connected by pipe\
+
+```{r eval=FALSE}
+#"cov_data_clean" is the input data set
+#using select, the defined columns are filtered
+#pipe to connect the functions
+#using filter, rows are filtered according to the defined date
+#assigned to new variable "cov_data_filtered"
+cov_data_filtered <- cov_data_clean %>% select(location, date, aged_70_older, total_deaths_per_million, continent) %>% filter(date == "2022-09-27")
+```
+
+-now we can actually make the plot with our new cleaned and filtered data set "cov_data_filtered"\
+
+-library ggplot2 needs to be installed and activated\
+-then we can make our first scatter plot with two layers, these are connected using the + sign\
+
+```{r eval=FALSE}
+#activate the library ggplot2
+library(ggplot2)
+
+#dot plot (=scatter plot)
+#layers are connected by + signs
+
+ggplot(data = cov_data_filtered) + ##1st layer: initialize the plot by defining the data set used 
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million)) #2nd layer dot plot /scatter plot by defining the plot type and what is x and what is y
+```
+
+-making the plot a bit more appealing by changing the dot size, the transparency and the color (within the second layer)\
+```{r eval=FALSE}
+ggplot(data = cov_data_filtered) + 
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million), size = 3, alpha = 0.5, color ="red") #defining size, transparency (alpha) and color
+```
+
+-adding more information to the plot\
+-instead of a random color we can also color the data points according to one more variable (e.g. continent)\
+-important: the color must be defined within the aes now (within the brackets behind aes)\
+```{r eval=FALSE}
+ggplot(data = cov_data_filtered) + 
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million, color = continent), size = 3, alpha = 0.5)
+```
+
+In the plot we have two outliers:\
+-one country has a comparably low amount of age >= 70 but still a high amount of total deaths per million\
+-the other one has a high amount of age >= 70 but a comparably low amount of total deaths per million\
+
+How can we figure out now which countries these are?\
+Using the filter function as we learned in the 3rd lecture:\
+```{r eval=FALSE}
+#Which country has at least 6000  deaths per million?
+filter(cov_data_filtered, total_deaths_per_million >= 6000)
+
+#Which country has a higher amount of people aged 70 or older than 17?
+filter(cov_data_filtered, aged_70_older >= 17)
+```
+
+
+
+# 17.11.2022 5th lecture
+
+## Recap\
+
+### Variable assignment\
+**where is my data frame?**\
+-if you assign a variable data is stored in the environment for further usage\
+-if you do not assign a variable the changed data frame will appear below the code chunk\
+
+example of filtering the data without assigning a variable
+```{r eval=FALSE}
+cov_data %>% filter(continent != "") 
+#now you can see the output below the code chunk but it will not be saved in the environment
+```
+
+example with assigning a new variable
+```{r eval=FALSE}
+cov_data_clean <- cov_data %>% filter(continent != "") 
+
+#now you have the new variable saved in your environment and you can look at the table, use it as input for a plot etc
+#but it will not be shown below the code chunk
+```
+
+
+### Quotation marks\
+**when are quotation marks needed?**\
+-if you need quotation marks or not depends on the data type\
+-chr = character column\
+     = all variables in the column are characters (e.g. in column "location", data: country names)\
+     = quotation marks are needed\
+-dbl = a form of numeric data\
+     = you don't need quotation marks (e.g. in column "total_deaths_per_million", data: numbers\
+
+```{r eval=FALSE}
+#characters need quotation marks
+filter(cov_data_clean, location == "Germany")
+
+#numbers don't need quotation marks
+filter(cov_data_clean, total_deaths_per_million >= 6000)
+```
+
+
+### Warnings\
+-sometimes when you execute code you get warning messages\
+-the code can be executed as intended but there is an issue with the data\
+
+-example from homework:\
+-some of you got warning messages when you did the dot plots\
+-the warning is caused by NA values (=not available) in one of the columns you wanted to use as input for the dot plot\
+-the plot is not wrong but some data is missing\
+-if there is no value for x or y it can not be plotted at all so the data point is missing from the plot\
+
+
+## Making plots part 2\ 
+
+First we want to recreate the plot from last week and make some changes to it
+```{r eval=FALSE}
+#if you start from here: load data
+#activate libraries needed (dplyr, ggplot2)
+
+#recreate the plot from last lecture by
+##cleaning up the data
+cov_data_clean <- cov_data %>% filter(continent != "") 
+cov_data_filtered <- cov_data_clean %>% select(location, date, aged_70_older, total_deaths_per_million, continent) %>% filter(date == "2022-09-27")
+
+##plotting the data
+ggplot(data = cov_data_filtered) + 
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million, color = continent), size = 3, alpha = 0.5)
+```
+
+You can get to the same plot if you combine all the functions to one piece of code (by using the pipe). Here you do not assign new variables like cov_data_clean or cov_data_filtered so you do not save them individually to the environment. You only make temporarily changes to the input data and get the plot in the end.
+
+```{r eval=FALSE}
+cov_data %>%
+  filter(continent != "") %>%
+  filter(date == "2022-09-27") %>%
+  select(location, date, aged_70_older, total_deaths_per_million, continent, extreme_poverty) %>%
+  ggplot() +
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million, color = continent, size = extreme_poverty), alpha = 0.5) +
+  labs(title = "Population age vs. death rate", x = "age > 70 (%) ", y = "Death rate / million") +
+  geom_label(mapping = aes(x = aged_70_older, y = total_deaths_per_million, label = location))
+``` 
+Now we want to make some changes to the plot e.g. adding/changing title and axis titles and adding labels to the data points
+
+```{r eval=FALSE}
+cov_data %>%
+  filter(continent != "") %>%
+  filter(date == "2022-09-27") %>%
+  select(location, date, aged_70_older, total_deaths_per_million, continent, extreme_poverty) %>%
+  ggplot() +
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million, color = continent, size = extreme_poverty), alpha = 0.5) +
+  labs(title = "Population age vs. death rate", x = "age > 70 (%) ", y = "Death rate / million") + #adding a plot title + axis titles
+  geom_label(mapping = aes(x = aged_70_older, y = total_deaths_per_million, label = location)) #adding labels to the data points
+``` 
+
+Now all the data points are covered with the labels so we can not see them anymore. One way to fix this is to switch the order of the layers:\
+If we have the code for the label first and the code for the data point afterwards you can see them on top.\
+
+```{r eval=FALSE}
+## switch the order of the layer if you want to have the points on top of the labels 
+
+cov_data %>%
+  filter(continent != "") %>%
+  filter(date == "2022-09-27") %>%
+  select(location, date, aged_70_older, total_deaths_per_million, continent, extreme_poverty) %>%
+  ggplot() +
+  geom_label(mapping = aes(x = aged_70_older, y = total_deaths_per_million, label = location)) +
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million, color = continent, size = extreme_poverty), alpha = 0.5) +
+  labs(title = "Population age vs. death rate", x = "age > 70 (%) ", y = "Death rate / million")
+```
+
+In this case this doesn't help because there is too much information. To solve the problem we only want to label the outlier.\
+
+```{r eval=FALSE}
+cov_data %>%
+  filter(continent != "") %>%
+  filter(date == "2022-09-27") %>%
+  select(location, date, aged_70_older, total_deaths_per_million, continent, extreme_poverty) %>%
+  ggplot(mapping = aes(x = aged_70_older, y = total_deaths_per_million)) + #we add the x and y info to the ggplot()
+  geom_point(mapping = aes(x = aged_70_older, y = total_deaths_per_million, color = continent, size = extreme_poverty), alpha = 0.5) +
+  labs(title = "Population age vs. death rate", x = "age > 70 (%) ", y = "Death rate / million") +
+  geom_label(data = cov_data %>% filter (total_deaths_per_million > 6000) %>% head(n=1),
+             mapping = aes(label = location)) #we filter the input data set for labeling so we only have the outlier there
+#we need to add head(n=1) because if we filter like shown above we will have multiple rows in the data and we only want the first one
+```
+
+
+### Error messages
+
+If you have an error in your code the code can not be executed. In that case you will get an error message.\
+Sometimes the messages are hard to understand, sometimes easy.\
+Here is one easy example:\
+If you filter out several columns using the select function and later want to plot data that is not there anymore (e.g. "extreme_poverty") you will get the message *'extreme_poverty' not found*.\
+Same is true if you have a typo like e.g. "total_death_per_million" instead of "total_deaths_per_million".\
+
+
+
+## More plot types
+### Box plot
+As an example for a box plot we chose total deaths per million in the countries of South America (although it is not the best way to plot this kind of data...).\
+In order to do this first we filter for South America.\
+Then we chose the location as x and the total_deaths_per_million as y.\
+If you plot it like that the labels on the x axis (country names) will overlap. One way to fix it is to flip the whole plot clockwise by 90°. Another way will be tilting the labels which we will introduce in the next cycle.\
+```{r eval=FALSE}
+cov_data %>%
+  filter(continent == "South America") %>%
+  ggplot() +
+  geom_boxplot(mapping = aes(x = location, y = total_deaths_per_million)) +
+  coord_flip() #flip the plot
+```
+
+### Line plot
+Here are a few examples for line plots. We chose to plot the numbers of total cases of the United States over time.
+```{r eval=FALSE}
+cov_data %>%
+  filter(location == "United States") %>% #choosing only data from the US
+  head(n = 10) %>% ## choosing only the first 10 data points first 10 dates of the time course)
+  ggplot() +
+  geom_line(mapping = aes(x = date, y = total_cases, group = location)) #initializing the line plot (define x and y)
+                                                              #group is needed to define which data points should be connected
+
+
+## Now we have the line plot with an additional layer of dots per time point that are connected
+
+cov_data %>%
+  filter(location == "United States") %>% #choosing only data from the US
+  head(n = 10) %>% ## choosing only the first 10 data points first 10 dates of the time course)
+  ggplot() +
+  geom_line(mapping = aes(x = date, y = total_cases, group = location)) + #initializing the line plot (define x and y)
+                                                              #group is needed to define which data points should be connected
+  geom_point(mapping = aes(x = date, y = total_cases)) #layer with dots on top
+
+
+## a shorter way to have the same plot by defining x and y in ggplot() so you don't have to repeat it every time
+cov_data %>%
+  filter(location == "United States") %>%
+  head(n = 10) %>%
+  ggplot(mapping = aes(x = date, y = total_cases)) +
+  geom_line(mapping = aes(group = location)) +
+  geom_point(mapping = aes())
+
+## a plot with more than one lines: we plot the numbers of total cases for the US and Germany over the whole time course
+
+cov_data %>%
+  filter(location == "United States" | location == "Germany") %>%
+  ggplot(mapping = aes(x = date, y = total_cases)) +
+  geom_line(mapping = aes(group = location, color = location))
+```
+
+
+# 24.11.2022 6th lecture
+
+## Recap\
+
+### Homework \
+-task was to generate a line plot of three countries (Hungary, Austria, Iceland) + plot the number of deaths on two dates (first + last day of 2021)\
+-some people went beyond that, e.g. plotted all dates\
+-for this it is necessary to convert the date to different format (Date format) (initially it is a character)\
+
+```{r eval=FALSE}
+cov_data %>%
+  mutate(date = as.Date(date))
+```
+
+-now the date column is really treated as a date and it can be also manipulated by e.g. adding 1 or 10 more days to it
+```{r eval=FALSE}
+cov_data %>%
+  mutate(date = as.Date(date)+1)
+
+cov_data %>%
+  mutate(date = as.Date(date)+10)
+```

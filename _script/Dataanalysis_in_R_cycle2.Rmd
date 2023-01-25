@@ -1,0 +1,526 @@
+---
+title: "Dataanalysis with R"
+author: "Julia Micheel"
+output:
+  html_document: default
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+# 24.11.2022 6th lecture
+
+## Cycle 2
+
+Topic: Global data on fertilizer usage\
+
+### Motivation:\
+-fertilizer nitrogen was used to combat famine during industrialization (to enhance crop yield and feed rising world population)\
+-data is a curation of many data sets on fertilizer usage per country and their effect on crop yield\
+
+### Data:
+**Global data on fertilizer use by crop and by country** (Ludemann et al. Global data on fertilizer use by crop and by country. Sci Data 9, 501 (2022))\
+
+publication: <https://doi.org/10.1038/s41597-022-01592-z>\
+DRYAD data base: <https://datadryad.org/stash/dataset/doi:10.5061/dryad.2rbnzs7qh>\
+-data can be downloaded here (upper right corner)\
+-zip data needs to be unpacked\
+-we are going to use the csv file "FUBC_1_to_9_data.csv"\
+-remember the path to where the file is saved on your computer (e.g. the download folder)\
+-now we will load data into R using the read.csv() function\
+
+
+```{r eval=FALSE}
+#load needed libraries
+library(dplyr)
+library(ggplot2)
+
+#loading data using "read.csv()" function, file = the path to where the file is stored
+fert_data <- read.csv(file = "/Users/Julia/Desktop/Promotion/teaching/dataanalysis_in_R/FUBC_1_to_9_data.csv")
+```
+
+### Summarise & group_by
+For our analysis we will use the data that was published in 2022 only (=Year_FUBC_publication)\
+Today, we introduce the functions **summarise** and **group_by** to calculate means, medians, sums... of the data set. The functions belong to the dplyr package.
+
+```{r eval=FALSE}
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) #filter data that was published in 2022
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  summarise(median(Crop_area_k_ha)) #the median of all crop areas is calculated
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  summarise(mean(Crop_area_k_ha)) #the mean of all crop areas is calculated
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  summarise(average_crop_area = mean(Crop_area_k_ha)) #the mean is calculated and named "average_crop_area"
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop) %>% #data is grouped by the different crops
+  summarise(average_crop_area = mean(Crop_area_k_ha)) #the mean of the different crop areas is calculated per crop
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop, Region_IFA) %>% #data is grouped by crop and region
+  summarise(average_crop_area = mean(Crop_area_k_ha)) #the mean of the different crop areas is calculated per crop and per region
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop, Region_IFA) %>%
+  summarise(average_crop_area = mean(Crop_area_k_ha), number_of_countries =n()) #additionally the countries are counted that contribute to the group (using the n() function)
+```
+
+With these new functions we want to answer some questions:\
+
+### Which crop needs on average the most space?
+```{r eval=FALSE}
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop) %>%
+  summarise(average_crop_area = mean(Crop_area_k_ha)) %>%
+  arrange(average_crop_area) # ordering the values by "average_crop_area" using the arrange function
+
+# arrange orders in increasing order (from lowest to highest value) but we want to have the highest on top
+# we apply "desc" within the arrange function: now the values are in descending order
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop) %>%
+  summarise(average_crop_area = mean(Crop_area_k_ha)) %>%
+  arrange(desc(average_crop_area))
+```
+
+### How much area of the world is used for crops?
+```{r eval=FALSE}
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  summarise(crop_area = sum(Crop_area_k_ha))
+```
+
+### How much area of the world is used for the individual crops?
+```{r eval=FALSE}
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop) %>%
+  summarise(crop_area = sum(Crop_area_k_ha))
+```
+
+Now we want to create a **bar plot** of the 5 crops that cover the biggest areas of the world with their respective area\
+```{r eval=FALSE}
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop) %>%
+  summarise(crop_area = sum(Crop_area_k_ha)) %>%
+  arrange(desc(crop_area)) %>%
+  head(n=5) %>% # choose only the top 5 rows from the list
+  ggplot() +
+  geom_col(mapping = aes(x=Crop, y=crop_area))
+# when we use this code the top 5 crop areas are plotted but in alphabetical order
+# we want to order them in decreasing order of the crop_area, so we use the reorder function (= -crop_area)
+
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop) %>%
+  summarise(crop_area = sum(Crop_area_k_ha)) %>%
+  arrange(desc(crop_area)) %>%
+  head(n=5) %>% # choose only the top 5 rows from the list
+  ggplot() +
+  geom_col(mapping = aes(x=reorder(Crop, -crop_area), y=crop_area)) #reorder function
+```
+
+
+# 01.12.2022 7th lecture\
+
+## Strings and the package Stringr\
+
+Strings:\
+-one or more characters enclosed in a pair of matching single or double quotes\
+-represent textual content and can contain numbers, spaces and special characters\
+-an empty string is represented by using “”\
+
+Within the global fertilizer data set we will come across a question where we need to work with strings.\
+One example is answering the question *What is the most abundant crop in the data set?*
+There are two ways to count how often the different crops are listed and subsequently sort them:\
+```{r eval=FALSE}
+# count how often the different crops are listed per crop and arrange them in descending order
+fert_data %>% count(Crop) %>% arrange(desc(n))
+
+# count and sort
+fert_data %>% count(Crop, sort = T)
+## here we say sort = T (=TRUE), meaning we activated sorting (not sorting the values is the default)
+## you can write TRUE or T / FALSE or F to activate or inactivate functions like that
+```
+This will give you the answer that "Maize" and "Wheat" are both mentioned 422 times. But if you scroll through the list you can see that for example maize is not only listed as "Maize" but also as "maize", "Maize & Corn", "Maize, silage" etc. This is a common problem if you work with survey data because people will enter data differently. So we only counted which answer was given most often and not which crop is mainly used.\ 
+To correctly answer our question we will need a new library called "stringr".
+This first needs to be installed and activated.
+
+```{r eval=FALSE}
+## install the new library (once)
+install.packages("stringr")
+
+## activate the library (every time)
+library(stringr)
+```
+
+Now we combine the function filter with the stringr function "str_detect". It is executed within the Crop column and we are looking for the string "Maize".
+
+```{r eval=FALSE}
+# filter for rows containing the word "Maize" in any form
+fert_data %>% filter(str_detect(string = Crop, pattern = "Maize"))
+```
+
+Now we got a lot more entries including "Maize & Corn" etc.\
+But what is still missing is maize (with lower case "m").\
+To tackle this problem we need regular expressions (= regex).\
+
+## Regular expressions
+
+To introduce regular expressions we will first work with a small example string and later go back to our global fertilizer data.\
+```{r eval=FALSE}
+# example for regular expressions
+# we create a test string (called test_strings) including three different strings
+
+test_strings <- c("apple", "banana", "pear")
+
+# if we want to have multiple strings assigned to just one variable we have to combine them using c("first string", "second string", "third string")
+
+# now we perform str_detect on our test string
+# within our test string we are looking for the pattern "a"
+str_detect(string = test_strings, pattern = "a")
+
+# the output is "TRUE TRUE TRUE"
+# this means that the pattern "a" is included in all strings of the test_string (= Apple, bAnAnA and peAr do include the letter a)
+
+# now we look for the pattern "ap"
+str_detect(string = test_strings, pattern = "ap")
+# the output is "TRUE FALSE FALSE"
+
+# the a has to be directly followed by p so it is true for APple but false for banana and pear (even though pear includes a and p)
+
+# now we look for the pattern "app.e"
+str_detect(string = test_strings, pattern = "app.e")
+# the output is "TRUE FALSE FALSE" 
+# because . is a "wildcard symbol" so it would be true for apple but also appae, appbe,... 
+#this can be helpful for the problem with upper case vs lower case letters but also for typos
+
+# look for an "a" at the beginning
+str_detect(string = test_strings, pattern = "^a")
+# output "TRUE FALSE FALSE"
+
+# look for an "a" at the end
+str_detect(string = test_strings, pattern = "a$")
+# output "FALSE TRUE FALSE"
+
+# look for multiple expressions at the same time (letters in brackets are considered as "or")
+str_detect(string = test_strings, pattern = "a[pr]")
+# now we are looking for the combination of ap and ar, so it is true for APple and peAR but false for banana
+
+# another way to get the same result is to write the "or" within the brackets as symbol | symbol or ,
+str_detect(string = test_strings, pattern = "a[p|r]")
+str_detect(string = test_strings, pattern = "a[p,r]")
+```
+
+
+Next we introduce a test string to target our problem from the fert_data.\
+```{r eval=FALSE}
+## new test string
+crop_strings <- c("maize", "Maize")
+
+## two ways how we can target Maize and maize at the same time:
+str_detect(string = crop_strings, pattern = "[Mm]a")
+str_detect(string = crop_strings, pattern = ".aize")
+```
+
+
+Now we go back to the fert_data set.\
+We want to count how many entries we can find that include maize.\
+```{r eval=FALSE}
+fert_data %>% 
+  filter(str_detect(string = Crop, pattern = "[Mm]aize")) %>% 
+  count(Crop)
+```
+
+Now we want to investigate the area of maize in Germany over time.
+```{r eval=FALSE}
+
+fert_data %>% 
+  filter(str_detect(string = Crop, pattern = ".aize")) %>% # filter all entries of maize
+  filter(Country == "Germany") %>%  #filter the country
+  group_by(Year) %>%  #group the values by year
+  summarise(maize_area = sum(Crop_area_k_ha)) #sum up the areas according to the groups (per year)
+
+
+## now we want to plot the maize area sizes over time
+fert_data %>% 
+  filter(str_detect(string = Crop, pattern = ".aize")) %>% 
+  filter(Country == "Germany") %>% 
+  group_by(Year) %>% 
+  summarise(maize_area = sum(Crop_area_k_ha)) %>% 
+  ggplot +
+  geom_point(mapping = aes(x = Year, y = maize_area)) +
+  geom_line(mapping = aes (x=Year, y = maize_area, group = 1))
+
+## a bit shorter code to get the same result
+fert_data %>% 
+  filter(str_detect(string = Crop, pattern = ".aize")) %>% 
+  filter(Country == "Germany") %>% 
+  group_by(Year) %>% 
+  summarise(maize_area = sum(Crop_area_k_ha)) %>% 
+  ggplot(mapping = aes(x=Year, y = maize_area, group = 1)) +
+  geom_point() +
+  geom_line()
+```
+
+# 08.12.2022 8th lecture\
+
+## Recap & Homework\
+
+Last weeks task was to use regular expressions to work with all sugar cane data (spelled "sugar cane", "sugar Cane", "Sugar cane", "Sugar Cane" and) "Sugarcane"\
+
+we got lots of different solutions so here are some examples how to solve the task:\
+
+### Two ways to solve the task using regex
+
+pattern = "[Cc]ane$"\
+(everything with Cane or cane in the end --> works because there is no other type of cane)\
+
+pattern = "[Ss]ugar.[Cc]ane|Sugarcane"\
+(combination of the 4 versions sugar cane with space and Boolean or (|) for Sugarcane without space)\
+
+### Advanced regex to solve the task
+
+pattern = "[sS]ugar[ ]{0,1}[cC]ane"\
+(all 4 types of sugar cane (with space) and the "optional space" in the center (consisting of 0 or 1 spaces indicated by the {}))\
+
+For this we need some more advanced regex commands we didn't talk about last week:\
+?: 0 or 1\
++: 1 or more\
+*: 0 or more\
+
+{n}: exactly n\
+{n,}: n or more\
+{,m}: at most m\
+{n,m}: between n and m\
+
+
+### Combinations of filtering and regex to solve the task
+1st solution:\
+filter independently for the pattern "[Ss]ugar, then filter for the pattern "[Cc]ane"\
+
+2nd solution:\
+filter for "[Ss]ugar [Cc]ane" and assign a variable, filter for "Sugarcane" and assign a second variable, rbind both data frames\
+
+
+
+## Data frame formats and Facets\
+Today we want to investigate the different amounts of fertilizers (nitrogen (n), phosphorus (p) and potassium (k)) used over in Germany and India.\
+First we filter for Germany and India. Next we have to sum up the amounts of different fertilizers per country per year (because some of them are used for multiple crops and so they are in the list multiple times). We save this data as the new data frame "fert_india_germany"
+
+```{r eval=FALSE}
+fert_india_germany <- fert_data %>%
+  filter(Country == "India" | Country == "Germany") %>%
+  group_by(Year, Country) %>%
+  summarise(n = sum(N_k_t),
+          p = sum(P2O5_k_t),
+          k = sum(K2O_k_t))
+```
+
+With the new data frame we encounter a problem we haven't had before. The table is in **wide format** instead of **long format**.\
+
+### Long format vs. Wide format
+
+**Long format:**\
+-also called "Tidy format"\
+-each column is a variable, each row is an observation\
+-long format data frames have many repetitions e.g. for the Country and also for the Year because for each observation (crop, fertilizer) you have a new row)\
+
+**Wide format:**\
+-the columns are different observations (e.g. different fertilizers in different columns instead of a "fertilizer" column with the different fertilizers in the rows\
+-this format is very common/intuitive (especially for non-informaticians)\
+-problem: the format is not "clean" e.g. you can not filter for everything you want\
+
+Wide format can be transformed into Long format and the other way around.\
+We need a new package for that called "tidyr".\
+
+```{r eval=FALSE}
+install.packages("tidyr") # install the package (once)
+library(tidyr) # activate the package every time you want to use it
+```
+
+Using the "pivot_wider" function we can transform the wide format into long format.\
+
+We have to define:\
+-which columns should be converted (in this case n, k and p)\
+-to which column should the column names go (using "names_to") --> the new column name is "fertilizer_type" and the former column names (n, k and p) are now observations within this column\
+-to which column the observations of the former columns should go ("using "values_to") --> the new column name is "kT" and the observations of the former n, k and p columns are now observations there (amount of each fertilizer used)\
+
+The table is much longer now because we have a row now per country per year per fertilizer\
+
+```{r eval=FALSE}
+fert_india_germany %>% 
+  pivot_longer(cols = c(n, k, p), names_to = "fertilizer_type", values_to ="kT")
+```
+Now we want to plot the amounts of the different fertilizers over time and per year. As this is a lot of information for one plot we will use the facet function. With this we can split the data e.g. per Country (using facet_wrap(~Country)) into multiple plots.
+```{r eval=FALSE}
+fert_india_germany %>% 
+  pivot_longer(cols = c(n, k, p), names_to = "fertilizer_type", values_to ="kT") %>% 
+  ggplot(mapping = aes(x = Year, y = kT, color = fertilizer_type, group = fertilizer_type)) + 
+  geom_point() + 
+  geom_line() +
+  facet_wrap(~Country)
+```
+# 15.12.2022 9th lecture\
+
+## administrative issues:\
+-the exam is not in Friedolin yet\
+-FMI students: registration by form with Mrs. Heuschild\
+-other faculties: contact examination office\
+
+## homework\
+A lot of different methods were used to remove "y_" from "y_2016, y_2017, y_2018" in the Year column:\
+`str_remove(string = year, pattern = "y_")`\
+`str_sub(ds_reform$year, -4)`\
+`sub("y_", "", fert_data$Year)`\
+`substr(Year,3,6)`\
+
+## Todays topic: Plots
+
+### Histogram
+First we want to create a histogram with the areas of maize.\
+We filter for only one publication so we don't have duplicates/overlaps.\
+Then we filter for maize (which is spelled Maize or Maize green) so we use strings for that.\
+Next we group by country and sum up the areas per country (because some of them have e.g. "Maize" and "Maize green").\
+Then we make a basic histogram first and later add some things to improve it.\
+
+```{r eval=FALSE}
+fert_data <- fert_data %>% as_tibble()
+
+maize2022 <- fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>% 
+  filter(str_detect(string = Crop, pattern = "[Mm]aize")) %>% 
+  group_by(Country) %>% 
+  summarise(maize_area = sum(Crop_area_k_ha))
+
+## basic histogram
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area))
+
+## add outline of the bars
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area), color = "white")
+
+## change bin sizes (can be done manually or you can pick a number of bins like did here (e.g. 15))
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area), color = "white", bins = 15)
+
+## change the scale to log10
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area), color = "white", bins = 15) +
+  scale_x_continuous(trans="log10")
+```
+If you want to change the overall appearance of your plot you can also change the theme. Here are two examples for the themes bw and minimal.
+```{r eval=FALSE}
+## change bin sizes
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area), color = "white", bins = 15) +
+  scale_x_continuous(trans="log10") +
+  theme_bw()
+
+## change bin sizes
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area), color = "white", bins = 15) +
+  scale_x_continuous(trans="log10") +
+  theme_minimal()
+```
+Now, we want to add a mean line and a median line to the plot. First we have to calculate and assign the mean or median value so that we can use it within the plot.\
+The colors and also type of the lines can be chosen. There are different line types (dotted, solid, dashed, long dashed...) which can be chosen by numbers (e.g. 2 = dashed)\
+
+```{r eval=FALSE}
+#calculate the mean of column "maize_area" of the table maize2022 (indicated with table$column), assign a variable
+mean_maize_area <- mean(maize2022$maize_area)
+#calculate median the same way
+median_maize_area <- median(maize2022$maize_area)
+
+ggplot(data = maize2022) +
+  geom_histogram(mapping = aes(x = maize_area), color = "white", bins = 15) +
+  scale_x_continuous(trans="log10") +
+  theme_minimal() +
+  geom_vline(xintercept = mean_maize_area, color = "red", linetype = 2) + #add mean line, choose color, choose line type
+  geom_vline(xintercept = median_maize_area, color = "blue", linetype = 2) + #add median line, choose color, choose line type
+  annotate(geom = "text", label = "--- mean", color = "red", x = 1, y = 11) + #add label for the mean line, choose color, choose position within the plot (x and y coordinates, refer to the axis)
+  annotate(geom = "text", label = "--- median", color = "blue", x = 1.1, y = 10) #add label for the median line, choose color, choose position within the plot (x and y coordinates, refer to the axis)
+```
+
+### Bar plot\
+For bar plots we used the **geom_col** function so far. There is a **geom_bar** function, too. What is the difference?\
+
+**geom_col**  works with defined x and y values while **geom_bar** will only use x as input and automatically count them to get y-value (at least as default operation).\
+
+Now we will use **geom_bar** to plat the numbers of different Crops so we use "Crop" as input for the x value and it will automatically count the crops.
+
+```{r eval=FALSE}
+## bar plot of the frequencies with which various crops were used
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  ggplot() +
+  geom_bar(mapping = aes(x=Crop)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, color = "black", face ="bold"))
+#here we change the angle of the x-axis labels so they are not overlapping, we also have to adjust the labels in height (hjust) in vertically (vjust) and we make the labels bold
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  ggplot() +
+  geom_bar(mapping = aes(x=Crop, fill = Crop)) + # here we add different fill colors per crop
+  scale_fill_viridis_d(option = "plasma") + # we use a color palette (there are many options...)
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, color = "black", face ="bold"))
+
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  ggplot() +
+  geom_bar(mapping = aes(x=Crop, fill = Crop)) +
+  scale_fill_viridis_d(option = "plasma") +
+  theme_minimal() + #here we add our theme minimal again # it's important to add this layer in the correct position otherwise theme code lines will overwrite each other
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, color = "black", face ="bold"))
+```
+
+
+Now we want to create stacked bar plots.\
+```{r eval=FALSE}
+
+## summary of the mean crop areas used per crop and per year
+## this time we assign x and y, to make this work we have to add stat = "identity"
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop, Year) %>% 
+  summarise(mean_land_usage = mean(Crop_area_k_ha)) %>% 
+  ggplot() +
+  geom_bar(mapping = aes(x=Year, y=mean_land_usage), stat = "identity")
+
+
+## here we can additionally add colors for the different crops to add a new layer of information
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop, Year) %>% 
+  summarise(mean_land_usage = mean(Crop_area_k_ha)) %>% 
+  ggplot() +
+  geom_bar(mapping = aes(x=Year, y=mean_land_usage, fill = Crop), stat = "identity") # fill = Crop adds the new information (colors + legend of crops)
+
+
+## another way to have the different crops next to each other instead of stacked is created with position = "dodge"
+fert_data %>%
+  filter(Year_FUBC_publication == 2022) %>%
+  group_by(Crop, Year) %>% 
+  summarise(mean_land_usage = mean(Crop_area_k_ha)) %>% 
+  ggplot() +
+  geom_bar(mapping = aes(x=Year, y=mean_land_usage, fill = Crop), stat = "identity", position = "dodge")
+```
+
