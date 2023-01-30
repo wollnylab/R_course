@@ -206,19 +206,29 @@ D.) `skip = 2, header = T, sep = "."`
 
 ## Question 8: Heatmaps
 
-**By Julia**
+Which argument is <u>not part</u> of the code to create the heatmap shown below using the `pheatmap()`-function? 
 
-```{r}
-# Julia's code
+```{r, fig.width= 10, fig.height=8,}
+library(pheatmap)
+iris_subsample <- iris %>%  group_by(Species) %>% dplyr::slice(1:20) %>% ungroup()
+
+annotation_df <- iris_subsample %>% select(Species)
+iris_subsample$Species <- NULL
+
+iris_subsample <- as.data.frame(iris_subsample)
+annotation_df <- as.data.frame(annotation_df)
+
+rownames(iris_subsample) <- c(1:60)
+rownames(annotation_df) <- c(1:60)
+pheatmap(iris_subsample, annotation_row =  annotation_df, cluster_cols = F, angle_col = 315, cutree_rows = 4, gaps_col = 2)
 ```
-
 
 **Which answer is correct:**\
 
-A.) 
-B.) 
-C.) 
-D.) 
+A.) `annotation_row =  annotation_df`\
+B.) `cluster_cols = F`\
+C.) `gaps_col = 2`\
+D.) `cluster_rows = F`
 
 --------------------------------------------------------------------------------------------------------
 
@@ -269,20 +279,36 @@ D.) `3`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 11: Modeling
+## Question 11: Modeling - *Part1*
 
-**By Aram**
+Which line of code will <u>resolve</u> the following error which results when executing the command `cor(iris)`?
 
-```{r}
-# Aram's code
+```{r, error=TRUE}
+cor(iris)
 ```
-
 
 **Which answer is correct:**\
 
-A.) 
-B.) 
-C.) 
-D.) 
+A.) `iris %>% filter(Sepal.Width >= 3) %>% cor()`\
+B.) `iris %>% select(-Species) %>% cor()`\
+C.) `iris %>% mutate(width_sum = Sepal.Width + Petal.Width) %>% cor()`\
+D.) `iris %>% select(-Sepal.Length) %>% cor()`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 12: Modeling - *Part2*
+
+What <u>kind of model</u> is used here and which variable is the <u>dependent variable</u>?
+
+```{r}
+lm(Petal.Length ~ Petal.Width, data = iris) 
+```
+
+**Which answer is correct:**\
+
+A.) logistic model; *Petal.Length* is the dependent variable\
+B.) linear model; *Petal.Width* is the dependent variable\
+C.) linear model; *Petal.Length* is the dependent variable\
+D.) logistic model; *Petal.Width* is the dependent variable
 
 --------------------------------------------------------------------------------------------------------
