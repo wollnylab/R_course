@@ -103,7 +103,63 @@ D.) `filter(Species != "setosa" | Petal.Width < 2)`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 4: Plotting data - *Part1*
+## Question 4: Piping - *Part1*
+
+Which sequence of the following commands 
+
+w.) `rename(petal_l = Petal.Length)`\
+x.) `mutate(petal_sum = petal_l + Petal.Width)`\
+y.) `select(Petal.Length, Petal.Width)`\
+z.) `filter(Petal.Length > 6 & Petal.Width < 2)`
+
+will generate this dataframe
+
+```{r}
+iris %>%
+  select(Petal.Length, Petal.Width) %>% 
+  filter(Petal.Length > 6 & Petal.Width < 2) %>% 
+  rename(petal_l = Petal.Length) %>% 
+  mutate(petal_sum = petal_l + Petal.Width) 
+```
+
+**Which answer is correct:**\
+
+A.) iris %>% w %>% y %>% z %>% x\
+B.) iris %>% y %>% w %>% z %>% x\
+C.) iris %>% y %>% z %>% w %>% x\
+D.) iris %>% z %>% y %>% x %>% w
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 5: Piping - *Part2*
+
+Which line of code will resolve this error?
+
+```{r, error = TRUE, message=FALSE, warning=FALSE}
+detach("package:tidyverse", unload=TRUE)
+detach("package:tibble", unload=TRUE)
+detach("package:ggplot2", unload=TRUE)
+detach("package:tidyr", unload=TRUE)
+detach("package:readr", unload=TRUE)
+detach("package:purrr", unload=TRUE)
+detach("package:dplyr", unload=TRUE)
+detach("package:stringr", unload=TRUE)
+detach("package:forcats", unload=TRUE)
+iris %>%
+  select(Petal.Length)
+library(tidyverse)
+```
+
+**Which answer is correct:**\
+
+A.) `load(ggplot2)`\
+B.) `load(dplyr)`\
+C.) `library(dplyr)`\
+D.) None of the above
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 6: Plotting data - *Part1*
 
 You want the plot you can see below using the following code:
 
@@ -132,7 +188,7 @@ D.) `line 3 contains an error`\
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 5: Plotting data - *Part2*
+## Question 7: Plotting data - *Part2*
 
 Which code will give you the plot you can see below:
 
@@ -153,7 +209,7 @@ D.) `ggplot(data = iris, mapping = aes(x = Species, y = Petal.Length), color = S
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 6: Summarize data
+## Question 8: Summarize data
 
 Which code will give you the table you can see below:
 
@@ -174,7 +230,7 @@ D.) `group_by(Species, mean(Petal.Width)) %>% summarise(count = n())`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 7: Regular expression - *Part1*
+## Question 9: Regular expression - *Part1*
 
 Which regular expression will **not** filter the table correctly (compare before vs. after)
 
@@ -199,7 +255,7 @@ D.) `filter(str_detect(Species, "v[e|i]r"))`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 8: Regular expression - *Part2*
+## Question 10: Regular expression - *Part2*
 
 Which regular expression will filter the table correctly (compare before vs. after)
 
@@ -224,7 +280,7 @@ D.) `filter(str_detect(Species, "o+"))`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 9: Tidy data
+## Question 11: Tidy data
 
 Which code, will get you the data in the desired format (compare before vs. after)
 
@@ -250,7 +306,7 @@ D.) `pivot_wider(cols = !Species, names_to = "Attributes", values_to = "Value")`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 10: Loading data
+## Question 12: Loading data
 
 How do you specifiy the arguments of the read.csv() function in order to load the data that you can see below (Sepal.Length etc is supposed to be the header as shown in the *General Information*):
 
@@ -272,7 +328,7 @@ D.) `skip = 2, header = T, sep = "."`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 11: Heatmaps - *Part 1*
+## Question 13: Heatmaps - *Part 1*
 
 For generating a heatmap with the package pheatmap the input data frame needs to fulfill certain characteristics.\
 Four steps for reshaping the input data frame are listed below.
@@ -286,7 +342,7 @@ D.) create additional data frames for annotations
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 12: Heatmaps - *Part 2*
+## Question 14: Heatmaps - *Part 2*
 
 Which argument is <u>not part</u> of the code to create the heatmap shown below using the `pheatmap()`-function? 
 
@@ -314,7 +370,7 @@ D.) `cluster_rows = F`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 13: Merging tables - *Part1*
+## Question 15: Merging tables - *Part1*
 
 How many <u>rows and columns</u> will the resulting dataframe have <u>after</u> merging the two dataframes **df1** and **df2** using the following code:
 
@@ -348,7 +404,7 @@ D.) Columns: `6`; Rows: `3`\
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 14: Merging tables - *Part2*
+## Question 16: Merging tables - *Part2*
 
 If you execute the code: `left_join(df1, df2, by = "ID")` on the dataframes **df1** and **df2** as described in Question 8, how many *NA* values will the resulting table have in total?
 
@@ -361,9 +417,9 @@ D.) `3`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 15: Modeling - *Part1*
+## Question 17: Modeling - *Part1*
 
-Which line of code will <u>resolve</u> the following error which results when executing the command `cor(iris)`?
+Which line of code will <u>resolve</u> the following error that results when executing the command `cor(iris)`?
 
 ```{r, error=TRUE}
 cor(iris)
@@ -378,7 +434,7 @@ D.) `iris %>% select(-Sepal.Length) %>% cor()`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 16: Modeling - *Part2*
+## Question 18: Modeling - *Part2*
 
 What <u>kind of model</u> is used here and which variable is the <u>dependent variable</u>?
 
