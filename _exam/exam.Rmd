@@ -272,7 +272,21 @@ D.) `skip = 2, header = T, sep = "."`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 11: Heatmaps
+## Question 11: Heatmaps - *Part 1*
+
+For generating a heatmap with the package pheatmap the input data frame needs to fulfill certain characteristics.\
+Four steps for reshaping the input data frame are listed below.
+
+**Which answer is <u>in</u>correct:**\
+
+A.) make sure all data in the input data frame is numeric\
+B.) make sure the input data frame is in long format\
+C.) generate row names that should be the labels shown in the plot\
+D.) create additional data frames for annotations
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 12: Heatmaps - *Part 2*
 
 Which argument is <u>not part</u> of the code to create the heatmap shown below using the `pheatmap()`-function? 
 
@@ -300,7 +314,7 @@ D.) `cluster_rows = F`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 12: Merging tables - *Part1*
+## Question 13: Merging tables - *Part1*
 
 How many <u>rows and columns</u> will the resulting dataframe have <u>after</u> merging the two dataframes **df1** and **df2** using the following code:
 
@@ -334,7 +348,7 @@ D.) Columns: `6`; Rows: `3`\
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 13: Merging tables - *Part2*
+## Question 14: Merging tables - *Part2*
 
 If you execute the code: `left_join(df1, df2, by = "ID")` on the dataframes **df1** and **df2** as described in Question 8, how many *NA* values will the resulting table have in total?
 
@@ -347,7 +361,7 @@ D.) `3`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 14: Modeling - *Part1*
+## Question 15: Modeling - *Part1*
 
 Which line of code will <u>resolve</u> the following error which results when executing the command `cor(iris)`?
 
@@ -364,7 +378,7 @@ D.) `iris %>% select(-Sepal.Length) %>% cor()`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 15: Modeling - *Part2*
+## Question 16: Modeling - *Part2*
 
 What <u>kind of model</u> is used here and which variable is the <u>dependent variable</u>?
 
