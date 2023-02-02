@@ -458,6 +458,21 @@ D.) <code>filter(Species != &quot;setosa&quot; | Petal.Width &lt; 2)</code></p>
 </div>
 <div id="question-4-piping---part1" class="section level2">
 <h2>Question 4: Piping - <em>Part1</em></h2>
+<p>What change to the code will resolve the following error?</p>
+<pre><code>## Error in iris %&gt;% select(Petal.Length): could not find function &quot;%&gt;%&quot;</code></pre>
+<p><strong>Which answer is correct:</strong><br />
+</p>
+<p>A.) library <em>ggplot</em> needs to be loaded first
+(<code>library(ggplot2)</code>)<br />
+B.) substitute <code>%&gt;%</code> with <code>%in%</code><br />
+C.) <em>Petal.Length</em> needs to be in quotation marks
+(<code>select(&quot;Petal.Length&quot;)</code>)<br />
+D.) library <em>dplyr</em> needs to be loaded first
+(<code>library(dplyr)</code>)</p>
+<hr />
+</div>
+<div id="question-5-piping---part2" class="section level2">
+<h2>Question 5: Piping - <em>Part2</em></h2>
 <p>Which sequence of the following commands</p>
 <p>w.) <code>rename(petal_l = Petal.Length)</code><br />
 x.) <code>mutate(petal_sum = petal_l + Petal.Width)</code><br />
@@ -474,18 +489,6 @@ z.)
 B.) iris %&gt;% y %&gt;% w %&gt;% z %&gt;% x<br />
 C.) iris %&gt;% y %&gt;% z %&gt;% w %&gt;% x<br />
 D.) iris %&gt;% z %&gt;% y %&gt;% x %&gt;% w</p>
-<hr />
-</div>
-<div id="question-5-piping---part2" class="section level2">
-<h2>Question 5: Piping - <em>Part2</em></h2>
-<p>Which line of code will resolve this error?</p>
-<pre><code>## Error in iris %&gt;% select(Petal.Length): could not find function &quot;%&gt;%&quot;</code></pre>
-<p><strong>Which answer is correct:</strong><br />
-</p>
-<p>A.) <code>library(ggplot2)</code><br />
-B.) <code>%in%</code><br />
-C.) <code>select(&quot;Petal.Length&quot;)</code><br />
-D.) <code>library(dplyr)</code></p>
 <hr />
 </div>
 <div id="question-6-plotting-data---part1" class="section level2">

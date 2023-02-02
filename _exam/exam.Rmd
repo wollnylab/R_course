@@ -105,6 +105,34 @@ D.) `filter(Species != "setosa" | Petal.Width < 2)`
 
 ## Question 4: Piping - *Part1*
 
+What change to the code will resolve the following error?
+
+```{r, error = TRUE, message=FALSE, warning=FALSE}
+detach("package:tidyverse", unload=TRUE)
+detach("package:tibble", unload=TRUE)
+detach("package:ggplot2", unload=TRUE)
+detach("package:tidyr", unload=TRUE)
+detach("package:readr", unload=TRUE)
+detach("package:purrr", unload=TRUE)
+detach("package:dplyr", unload=TRUE)
+detach("package:stringr", unload=TRUE)
+detach("package:forcats", unload=TRUE)
+iris %>%
+  select(Petal.Length)
+library(tidyverse)
+```
+
+**Which answer is correct:**\
+
+A.) library *ggplot* needs to be loaded first (`library(ggplot2)`)\
+B.) substitute `%>%` with `%in%`\
+C.) *Petal.Length* needs to be in quotation marks (`select("Petal.Length")`)\
+D.) library *dplyr* needs to be loaded first (`library(dplyr)`)
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 5: Piping - *Part2*
+
 Which sequence of the following commands 
 
 w.) `rename(petal_l = Petal.Length)`\
@@ -128,34 +156,6 @@ A.) iris %>% w %>% y %>% z %>% x\
 B.) iris %>% y %>% w %>% z %>% x\
 C.) iris %>% y %>% z %>% w %>% x\
 D.) iris %>% z %>% y %>% x %>% w
-
---------------------------------------------------------------------------------------------------------
-
-## Question 5: Piping - *Part2*
-
-Which line of code will resolve this error?
-
-```{r, error = TRUE, message=FALSE, warning=FALSE}
-detach("package:tidyverse", unload=TRUE)
-detach("package:tibble", unload=TRUE)
-detach("package:ggplot2", unload=TRUE)
-detach("package:tidyr", unload=TRUE)
-detach("package:readr", unload=TRUE)
-detach("package:purrr", unload=TRUE)
-detach("package:dplyr", unload=TRUE)
-detach("package:stringr", unload=TRUE)
-detach("package:forcats", unload=TRUE)
-iris %>%
-  select(Petal.Length)
-library(tidyverse)
-```
-
-**Which answer is correct:**\
-
-A.) `library(ggplot2)`\
-B.) `%in%`\
-C.) `select("Petal.Length")`\
-D.) `library(dplyr)`
 
 --------------------------------------------------------------------------------------------------------
 
