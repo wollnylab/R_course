@@ -152,10 +152,10 @@ library(tidyverse)
 
 **Which answer is correct:**\
 
-A.) `load(ggplot2)`\
-B.) `load(dplyr)`\
-C.) `library(dplyr)`\
-D.) None of the above
+A.) `library(ggplot2)`\
+B.) `%in%`\
+C.) `select("Petal.Length")`\
+D.) `library(dplyr)`
 
 --------------------------------------------------------------------------------------------------------
 
