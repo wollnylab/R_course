@@ -46,8 +46,8 @@ iris %>%
 
 A.) `select(-Species)`\
 B.) `select(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width)`\
-C.) `filter(c(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))`\
-D.) `filter(-c(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))`
+C.) `select(c(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))`\
+D.) `select(-c(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))`
 
 --------------------------------------------------------------------------------------------------------
 
