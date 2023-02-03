@@ -26,26 +26,7 @@ iris %>% head(5)
 str(iris)
 ```
 
-## Question 1: Generating new columns
-
-You want to generate a new column and use it for calculations as described in the code below:
-
-```{r, echo = TRUE, eval=F}
-iris %>% # line1
-  mutate(new_column == 2) %>%  # line2
-  mutate(Petal.Length + new_column) # line3
-```
-
-**Is the code correct?**\
-
-A.) `code is correct`\
-B.) `line 1 contains an error`\
-C.) `line 2 contains an error`\
-D.) `line 3 contains an error`\
-
---------------------------------------------------------------------------------------------------------
-
-## Question 2: Selecting columns
+## Question 1: Selecting columns
 
 How was the data modified to get the resulting dataframe (compare before vs. after)
 
@@ -70,7 +51,7 @@ D.) `filter(-c(Sepal.Length,Sepal.Width,Petal.Length,Petal.Width))`
 
 --------------------------------------------------------------------------------------------------------
 
-## Question 3: Filtering dataframes
+## Question 2: Filtering dataframes
 
 How was the data filtered to get the resulting dataframe (compare before vs. after)
 
@@ -100,6 +81,25 @@ A.) `filter(Species != setosa & Petal.Width < 2)`\
 B.) `filter(Species != "setosa" & Petal.Width < 2)`\
 C.) `filter(Species != setosa | Petal.Width < 2)`\
 D.) `filter(Species != "setosa" | Petal.Width < 2)`
+
+--------------------------------------------------------------------------------------------------------
+
+## Question 3: Generating new columns
+
+You want to generate a new column and use it for calculations as described in the code below:
+
+```{r, echo = TRUE, eval=F}
+iris %>% # line1
+  mutate(new_column == 2) %>%  # line2
+  mutate(Petal.Length + new_column) # line3
+```
+
+**Is the code correct?**\
+
+A.) `code is correct`\
+B.) `line 1 contains an error`\
+C.) `line 2 contains an error`\
+D.) `line 3 contains an error`\
 
 --------------------------------------------------------------------------------------------------------
 
@@ -243,14 +243,14 @@ iris %>%
 ```{r}
 iris %>% 
   count(Species) %>% 
-  filter(str_detect(Species, "v.r"))
+  filter(str_detect(Species, "v.r")) 
 ```
 
-**Which answer is correct:**\
+**Which code will <u>not</u> give the desired outcome:**\
 
 A.) `filter(str_detect(Species, "v.r"))`\
 B.) `filter(str_detect(Species, "^v."))`\
-C.) `filter(str_detect(Species, "v*r"))`\
+C.) `filter(str_detect(Species, "v+r"))`\
 D.) `filter(str_detect(Species, "v[e|i]r"))`
 
 --------------------------------------------------------------------------------------------------------
@@ -333,7 +333,7 @@ D.) `skip = 2, header = T, sep = "."`
 For generating a heatmap with the package pheatmap the input data frame needs to fulfill certain characteristics.\
 Four steps for reshaping the input data frame are listed below.
 
-**Which answer is <u>in</u>correct:**\
+**Which answer is <u>not</u> correct:**\
 
 A.) make sure all data in the input data frame is numeric\
 B.) make sure the input data frame is in long format\
@@ -399,8 +399,8 @@ df2
 
 A.) Columns: `4`; Rows: `3`\
 B.) Columns: `4`; Rows: `6`\
-C.) Columns: `5`; Rows: `3`\
-D.) Columns: `6`; Rows: `3`\
+C.) Columns: `7`; Rows: `3`\
+D.) Columns: `8`; Rows: `3`\
 
 --------------------------------------------------------------------------------------------------------
 
