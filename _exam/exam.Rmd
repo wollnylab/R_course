@@ -14,7 +14,7 @@ library(tidyverse)
 
 ## General Information
 
-The following exam is build on the so-called `iris` data, which is is pre-installed in every R environment. You should be able to answer all questions without knowing the data. But in order to give you an idea what the data looks like, here are the first 5 rows:
+The following exam is build on the so-called `iris` dataset, which is pre-installed in every R environment. You should be able to answer all questions without knowing the data. But in order to give you an idea what the data looks like, here are the first 5 rows:
 
 ```{r}
 iris %>% head(5)
@@ -406,7 +406,7 @@ D.) Columns: `8`; Rows: `3`\
 
 ## Question 16: Merging tables - *Part2*
 
-If you execute the code: `left_join(df1, df2, by = "ID")` on the dataframes **df1** and **df2** as described in Question 8, how many *NA* values will the resulting table have in total?
+If you execute the code: `left_join(df1, df2, by = "ID")` on the dataframes **df1** and **df2** as described in the question before, how many *NA* values will the resulting table have in total?
 
 **Which answer is correct:**\
 
